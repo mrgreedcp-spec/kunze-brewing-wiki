@@ -2,7 +2,7 @@
 
 按 Wolfgang Kunze《Technology Brewing and Malting》（第 3 版国际版，VLB Berlin 2004）的顺序整理的中文学习笔记：从大麦到灌装的 6 个工艺阶段，加上成品啤酒、小型酿造、废物与环境、能源、自动化与工厂规划 5 个专题，共 68 个工序。每个工序写明目的、关键参数、机理、常见问题和自测题。
 
-交互版（图表、计算器、搜索、术语表）：[Kunze 酿造工艺图谱](https://claude.ai/artifact/18cgTT4TP39ZYKT4qf6q6u)（需登录 Claude 并获得分享权限；仓库中的 `site/index.html` 是同一页面，可直接用浏览器打开）。整理方法见[从一本书到一个 wiki](https://claude.ai/artifact/YHbbEryh4Z1QRi5mxYRuzx)。
+交互版（图表、计算器、搜索、术语表）：[GitHub Pages](https://mrgreedcp-spec.github.io/kunze-brewing-wiki/)（公开）；claude.ai 上也有同一页面 [Kunze 酿造工艺图谱](https://claude.ai/artifact/18cgTT4TP39ZYKT4qf6q6u)（需登录 Claude 并获得分享权限）；仓库中的 `site/index.html` 可下载后直接用浏览器打开。整理方法见 [docs/book-to-wiki.md](https://github.com/mrgreedcp-spec/kunze-brewing-wiki/blob/main/docs/book-to-wiki.md)（claude.ai 上的在线文档：[从一本书到一个 wiki](https://claude.ai/artifact/YHbbEryh4Z1QRi5mxYRuzx)）。
 
 ## 工艺主线
 

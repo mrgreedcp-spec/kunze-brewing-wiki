@@ -103,7 +103,7 @@
 | MkDocs 或 Docusaurus 加 GitHub Pages | 有搜索、导航和主题，像正式文档站 | 需要构建；私有仓库开 Pages 需要付费计划 |
 | Notion、飞书、语雀、Obsidian | 编辑方便，适合个人知识库 | 版本管理弱，批量生成和迁移不方便 |
 
-本仓库三种都准备好了：
+本仓库现在的做法：仓库公开，Markdown wiki 直接在仓库里读；每次推送到 main，GitHub Actions 从 `src/` 重新生成交互网页、检查 wiki 链接，并发布到 GitHub Pages（<https://mrgreedcp-spec.github.io/kunze-brewing-wiki/>）；claude.ai 上另有同一页面。其他方式也准备好了：
 
 ```bash
 # 1) 仓库内直接浏览：打开 wiki/README.md

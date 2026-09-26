@@ -30,6 +30,8 @@ const PROC = () => D.STAGES.filter(st => !st.topic), TOPICS = () => D.STAGES.fil
 const HOME = GH ? 'Home' : 'README';
 const ARTIFACT = 'https://claude.ai/artifact/18cgTT4TP39ZYKT4qf6q6u';
 const GUIDE = 'https://claude.ai/artifact/YHbbEryh4Z1QRi5mxYRuzx';
+const PAGES_URL = 'https://mrgreedcp-spec.github.io/kunze-brewing-wiki/';
+const GUIDE_GH = 'https://github.com/mrgreedcp-spec/kunze-brewing-wiki/blob/main/docs/book-to-wiki.md';
 const link = (page, anchor = '') => (GH ? page : page + '.md') + (anchor ? '#' + anchor : '');
 const eh = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const et = s => eh(s).replace(/\|/g, '\\|');
@@ -128,7 +130,7 @@ function homePage() {
   const rows = PROC().map(st => [`[${nn(st.n)} ${st.name}](${link(PAGES[st.n])})`, `p.${st.pages}`, `${et(st.inp)} → ${et(st.out)}`, st.chips.map(et).join('；'), String(st.steps.length)]);
   const trows = TOPICS().map(st => [`[${nn(st.n)} ${st.name}](${link(PAGES[st.n])})`, `p.${st.pages}`, et(st.scope), st.chips.map(et).join('；'), String(st.steps.length)]);
   return `# Kunze 酿造工艺 wiki\n\n按 Wolfgang Kunze《Technology Brewing and Malting》（第 3 版国际版，VLB Berlin 2004）的顺序整理的中文学习笔记：从大麦到灌装的 ${PROC().length} 个工艺阶段，加上成品啤酒、小型酿造、废物与环境、能源、自动化与工厂规划 ${TOPICS().length} 个专题，共 ${nSteps} 个工序。每个工序写明目的、关键参数、机理、常见问题和自测题。\n\n`
-    + `交互版（图表、计算器、搜索、术语表）：[Kunze 酿造工艺图谱](${ARTIFACT})（需登录 Claude 并获得分享权限；仓库中的 \`site/index.html\` 是同一页面，可直接用浏览器打开）。整理方法见[从一本书到一个 wiki](${GUIDE})。\n\n`
+    + `交互版（图表、计算器、搜索、术语表）：[GitHub Pages](${PAGES_URL})（公开）；claude.ai 上也有同一页面 [Kunze 酿造工艺图谱](${ARTIFACT})（需登录 Claude 并获得分享权限）；仓库中的 \`site/index.html\` 可下载后直接用浏览器打开。整理方法见 [docs/book-to-wiki.md](${GUIDE_GH})（claude.ai 上的在线文档：[从一本书到一个 wiki](${GUIDE})）。\n\n`
     + '## 工艺主线\n\n' + rawTable(['阶段', '原书页码', '输入 → 输出', '关键数字', '工序数'], rows)
     + '\n## 专题（原书引言与第 7–11 章）\n\n' + rawTable(['专题', '原书页码', '范围', '关键数字', '工序数'], trows)
     + `\n## 其他页面\n\n- [计算工具与公式](${link('tools')})：${Object.keys(D.TOOLS).length} 个，含示例计算\n- [糖化、发酵程序与酶](${link('programmes')})\n- [术语表](${link('glossary')})：${D.GLOSSARY.length} 条\n- [自测题](${link('quiz')})：${nQ} 道\n- [来源、页码与覆盖范围](${link('sources')})\n\n`
