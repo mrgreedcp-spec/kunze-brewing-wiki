@@ -1,16 +1,17 @@
 # Kunze 酿造工艺 wiki
 
-按 Wolfgang Kunze《Technology Brewing and Malting》（第 3 版国际版，VLB Berlin 2004）印刷页 p.32 起的顺序，把啤酒从原料到灌装的全过程整理成中文学习笔记：6 个阶段、40 个工序，附 14 个计算工具、66 条术语和 54 道自测题。
+按 Wolfgang Kunze《Technology Brewing and Malting》（第 3 版国际版，VLB Berlin 2004）的顺序，把全书整理成中文学习笔记：从原料到灌装的 6 个工艺阶段，加上成品啤酒、小型酿造、废物与环境、能源、自动化与工厂规划 5 个专题（含原书引言的啤酒简史），共 68 个工序，附 22 个计算工具、119 条术语和 114 道自测题。
 
 - **阅读 wiki**：[wiki/README.md](wiki/README.md)
-- **交互网页**（图表、计算器、搜索）：`site/index.html`，下载后用浏览器打开即可（字体从 Google Fonts 加载，离线时自动换用系统字体）
-- **方法说明**：[从一本书到一个 wiki 的流程](docs/book-to-wiki.md)
+- **交互网页**（图表、计算器、搜索、术语表）：在线版 [Kunze 酿造工艺图谱](https://claude.ai/artifact/18cgTT4TP39ZYKT4qf6q6u)；也可以下载 `site/index.html` 用浏览器打开（字体从 Google Fonts 加载，离线时自动换用系统字体）
+- **方法说明**：[从一本书到一个 wiki 的流程](docs/book-to-wiki.md)（在线版：[claude.ai 文档](https://claude.ai/artifact/YHbbEryh4Z1QRi5mxYRuzx)）
+- 两个在线页面都在 claude.ai 上，需要登录 Claude 并由所有者分享后才能打开
 
 ## 目录结构
 
 ```text
 src/
-  content/   每个阶段的结构化内容（唯一的事实源）
+  content/   每个阶段和专题的结构化内容（唯一的事实源）
   page/      交互网页的样式、图表、计算器与渲染脚本
   wiki/      术语表、覆盖范围与书中疑点
 scripts/
@@ -35,7 +36,7 @@ npm run build:gh-wiki  # 生成 GitHub Wiki 格式到 build/gh-wiki/
 
 ## 覆盖范围
 
-已整理原书第 1–6 章（p.32–731）。第 5 章的贴标、包装和码垛机械从略；第 7–11 章（成品啤酒、小型酿造、废物、能源、自动化）尚未整理。详见 [来源、页码与覆盖范围](wiki/sources.md)。
+已整理原书引言和第 1–11 章（p.19–919）；只有附录（缩写表、单位换算、文献与索引）没有整理。第 1–6 章按工艺顺序组成 6 个阶段，引言和第 7–11 章是横向内容，另设 5 个专题。书中发现的排印错误和前后不一致见 [来源、页码与覆盖范围](wiki/sources.md)。
 
 ## 版权与使用说明
 

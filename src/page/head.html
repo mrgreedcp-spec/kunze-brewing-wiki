@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kunze 酿造工艺图谱</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -188,6 +190,24 @@ figure.chart figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;max-w
 .tt .r{display:flex;align-items:center;gap:6px;white-space:nowrap}
 .tt .r b{font-variant-numeric:tabular-nums}
 .tt .e{color:var(--muted);font-size:12px}
+/* 专题卡片、分隔、术语表 */
+.topics{margin-top:14px}
+.tp-h{font:600 12.5px var(--sans);letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
+.topics ol{grid-template-columns:repeat(5,minmax(178px,1fr))}
+.fs.tp::before,.fs.tp::after{display:none}
+.fs.tp .fs-ic{color:var(--amber)}
+.fs.tp .fs-no{color:var(--hop)}
+.idx .isep{margin:12px 6px 6px;padding-top:10px;border-top:1px solid var(--line);font:600 11.5px var(--sans);letter-spacing:.06em;color:var(--muted)}
+.part-h{margin:60px 0 0;padding-top:14px;border-top:2px solid var(--amber);font:700 13px var(--sans);letter-spacing:.08em;color:var(--amber)}
+.part-h+section.stage{margin-top:22px}
+.gl-t{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px 16px 10px}
+.gl-t td:first-child{min-width:7.5em}
+.gl-t td.gl-en{color:var(--muted);font-size:12.5px;min-width:9em}
+.gl-t td.gl-see{white-space:nowrap}
+footer.src details{margin:14px 0 10px}
+footer.src summary{cursor:pointer;font-weight:600;color:var(--ink)}
+footer.src .tbl{margin-top:10px}
+footer.src .tbl table{font-size:12.5px}
 footer.src{margin-top:60px;border-top:1px solid var(--line);padding-top:18px;font-size:13px;color:var(--muted)}
 footer.src p{max-width:92ch;margin:0 0 8px}
 .empty{margin-top:24px;color:var(--muted)}
@@ -205,16 +225,17 @@ footer.src p{max-width:92ch;margin:0 0 8px}
 
 <div class="wrap">
   <header class="top">
-    <p class="eyebrow">学习笔记 · 据 Kunze《Technology Brewing and Malting》第 3 版国际版（VLB Berlin, 2004）· 页码为原书印刷页码，自 p.32 起</p>
+    <p class="eyebrow">学习笔记 · 据 Kunze《Technology Brewing and Malting》第 3 版国际版（VLB Berlin, 2004）· 页码为原书印刷页码</p>
     <h1>Kunze 酿造工艺图谱</h1>
-    <p class="lede">从大麦到瓶子，按原书顺序整理成 6 个阶段。每个工序写明它要达到的目的、关键参数、背后的机理和常见问题；书里的计算方法做成了可以改数的小工具。全部为中文自述，不是原文翻译。</p>
+    <p class="lede">从大麦到瓶子，按原书顺序整理成 6 个工艺阶段；成品啤酒、小型酿造、废物与环境、能源、自动化与工厂规划另列 5 个专题。每个工序写明它要达到的目的、关键参数、背后的机理和常见问题；书里的计算方法做成了可以改数的小工具。全部为中文自述，不是原文翻译。</p>
     <div class="bar">
-      <label class="search" for="q"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg><input id="q" type="search" placeholder="搜索工序或术语，如 DMS、残碱度、PVPP" autocomplete="off" aria-label="搜索工序或术语"></label>
+      <label class="search" for="q"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg><input id="q" type="search" placeholder="搜索工序或术语，如 DMS、PVPP、双座阀" autocomplete="off" aria-label="搜索工序或术语"></label>
       <div class="stats" id="stats"></div>
       <div class="count" id="count" aria-live="polite"></div>
     </div>
   </header>
-  <nav class="flow" aria-label="六个阶段"><ol id="flow"></ol></nav>
+  <nav class="flow" aria-label="六个工艺阶段"><ol id="flow"></ol></nav>
+  <nav class="flow topics" aria-label="专题"><h2 class="tp-h">专题 · 原书引言与第 7–11 章</h2><ol id="topics"></ol></nav>
   <div class="layout">
     <aside class="idx" aria-label="目录"><h2>目录</h2><ol id="idx"></ol><div class="tl" id="idx-tools"></div></aside>
     <main id="main"></main>

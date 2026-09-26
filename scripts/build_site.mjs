@@ -1,4 +1,4 @@
-// 把 src/ 下的样式、内容数据和渲染脚本拼成单文件网页 site/index.html
+// 把 src/ 下的样式、内容数据、术语表与覆盖范围和渲染脚本拼成单文件网页 site/index.html
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -9,7 +9,8 @@ const content = fs.readdirSync(path.join(root, 'src/content')).filter(f => f.end
 const js = [
   read('src/page/core.js'), read('src/page/tools.js'),
   ...content.map(f => read('src/content/' + f)),
-  read('src/page/programmes.js') + read('src/page/render.js')
+  read('src/page/programmes.js'), read('src/wiki/glossary.js'), read('src/wiki/coverage.js'),
+  read('src/page/render.js')
 ];
 const html = read('src/page/head.html') + '<script>\n' + js.map(s => s + '\n').join('') + '</script>\n';
 fs.mkdirSync(path.join(root, 'site'), { recursive: true });

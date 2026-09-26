@@ -24,9 +24,12 @@ const code = [
 const D = vm.runInContext(code, vm.createContext({}));
 
 // 2. 通用函数
-const PAGES = { 1: '01-raw-materials', 2: '02-malting', 3: '03-wort-production', 4: '04-fermentation', 5: '05-filtration-stabilisation', 6: '06-filling-cleaning' };
+const PAGES = { 1: '01-raw-materials', 2: '02-malting', 3: '03-wort-production', 4: '04-fermentation', 5: '05-filtration-stabilisation', 6: '06-filling-cleaning',
+  7: '07-finished-beer', 8: '08-small-scale-brewing', 9: '09-environment', 10: '10-energy', 11: '11-automation-planning' };
+const PROC = () => D.STAGES.filter(st => !st.topic), TOPICS = () => D.STAGES.filter(st => st.topic);
 const HOME = GH ? 'Home' : 'README';
 const ARTIFACT = 'https://claude.ai/artifact/18cgTT4TP39ZYKT4qf6q6u';
+const GUIDE = 'https://claude.ai/artifact/YHbbEryh4Z1QRi5mxYRuzx';
 const link = (page, anchor = '') => (GH ? page : page + '.md') + (anchor ? '#' + anchor : '');
 const eh = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const et = s => eh(s).replace(/\|/g, '\\|');
@@ -59,8 +62,8 @@ function stepMd(s) {
 }
 function stagePage(st, i) {
   const prev = D.STAGES[i - 1], next = D.STAGES[i + 1];
-  let o = `# ${nn(st.n)} ${st.name}（${st.en}）\n\n> Kunze 原书印刷页 p.${st.pages} · ${back}\n\n${eh(st.sum)}\n\n`;
-  o += `- **输入**：${eh(st.inp)}\n- **输出**：${eh(st.out)}\n- **关键数字**：${st.chips.map(eh).join(' · ')}\n\n`;
+  let o = `# ${nn(st.n)} ${st.name}（${st.en}）\n\n> ${st.topic ? '专题 · ' : ''}Kunze 原书印刷页 p.${st.pages} · ${back}\n\n${eh(st.sum)}\n\n`;
+  o += (st.topic ? `- **范围**：${eh(st.scope)}\n` : `- **输入**：${eh(st.inp)}\n- **输出**：${eh(st.out)}\n`) + `- **关键数字**：${st.chips.map(eh).join(' · ')}\n\n`;
   o += '**本页工序**：' + st.steps.map(s => `[${s.no} ${eh(s.t)}](#${s.id})`).join(' · ') + '\n\n';
   st.steps.forEach(s => { o += stepMd(s); });
   o += '---\n\n' + [prev ? `← [${nn(prev.n)} ${prev.name}](${link(PAGES[prev.n])})` : '', back, next ? `[${nn(next.n)} ${next.name}](${link(PAGES[next.n])}) →` : ''].filter(Boolean).join(' · ') + '\n';
@@ -109,7 +112,7 @@ function glossaryPage() {
 function quizPage() {
   let o = `# 自测题\n\n> 共 ${nQ} 道，按工序排列，点开看答案。答不上来就回到对应工序重读。${back}\n\n`;
   D.STAGES.forEach(st => {
-    o += `## ${nn(st.n)} ${st.name}\n\n`;
+    o += `## ${st.topic ? '专题 ' : ''}${nn(st.n)} ${st.name}\n\n`;
     st.steps.filter(s => s.q).forEach(s => { o += `### ${stepLink(s.id)}\n\n` + s.q.map(([q, a]) => details(q, a)).join('\n') + '\n'; });
   });
   return o;
@@ -122,15 +125,18 @@ function sourcesPage() {
     + '\n## 生成方式\n\n本 wiki 由 `scripts/build_wiki.mjs` 从 `src/` 下的结构化数据自动生成；要修改内容，请改数据后重新生成，不要直接改这些页面。\n';
 }
 function homePage() {
-  const rows = D.STAGES.map(st => [`[${nn(st.n)} ${st.name}](${link(PAGES[st.n])})`, `p.${st.pages}`, `${et(st.inp)} → ${et(st.out)}`, st.chips.map(et).join('；'), String(st.steps.length)]);
-  return `# Kunze 酿造工艺 wiki\n\n按 Wolfgang Kunze《Technology Brewing and Malting》（第 3 版国际版，VLB Berlin 2004）印刷页 p.32 起的顺序整理的中文学习笔记：从大麦到灌装共 6 个阶段、${nSteps} 个工序。每个工序写明目的、关键参数、机理、常见问题和自测题。\n\n`
-    + `交互版（图表、计算器、搜索）：[Kunze 酿造工艺图谱](${ARTIFACT})（需登录 Claude 并获得分享权限；仓库中的 \`site/index.html\` 是同一页面，可直接用浏览器打开）。\n\n`
+  const rows = PROC().map(st => [`[${nn(st.n)} ${st.name}](${link(PAGES[st.n])})`, `p.${st.pages}`, `${et(st.inp)} → ${et(st.out)}`, st.chips.map(et).join('；'), String(st.steps.length)]);
+  const trows = TOPICS().map(st => [`[${nn(st.n)} ${st.name}](${link(PAGES[st.n])})`, `p.${st.pages}`, et(st.scope), st.chips.map(et).join('；'), String(st.steps.length)]);
+  return `# Kunze 酿造工艺 wiki\n\n按 Wolfgang Kunze《Technology Brewing and Malting》（第 3 版国际版，VLB Berlin 2004）的顺序整理的中文学习笔记：从大麦到灌装的 ${PROC().length} 个工艺阶段，加上成品啤酒、小型酿造、废物与环境、能源、自动化与工厂规划 ${TOPICS().length} 个专题，共 ${nSteps} 个工序。每个工序写明目的、关键参数、机理、常见问题和自测题。\n\n`
+    + `交互版（图表、计算器、搜索、术语表）：[Kunze 酿造工艺图谱](${ARTIFACT})（需登录 Claude 并获得分享权限；仓库中的 \`site/index.html\` 是同一页面，可直接用浏览器打开）。整理方法见[从一本书到一个 wiki](${GUIDE})。\n\n`
     + '## 工艺主线\n\n' + rawTable(['阶段', '原书页码', '输入 → 输出', '关键数字', '工序数'], rows)
+    + '\n## 专题（原书引言与第 7–11 章）\n\n' + rawTable(['专题', '原书页码', '范围', '关键数字', '工序数'], trows)
     + `\n## 其他页面\n\n- [计算工具与公式](${link('tools')})：${Object.keys(D.TOOLS).length} 个，含示例计算\n- [糖化、发酵程序与酶](${link('programmes')})\n- [术语表](${link('glossary')})：${D.GLOSSARY.length} 条\n- [自测题](${link('quiz')})：${nQ} 道\n- [来源、页码与覆盖范围](${link('sources')})\n\n`
-    + '## 怎么用\n\n1. 先用上表把六个阶段串起来，再进入某一阶段按工序读。\n2. 每个工序先读“目的”，再看“关键参数”，最后用“机理与要点”解释这些参数为什么是这样。\n3. 读完一个工序就做它的自测题；术语不熟时查术语表。\n4. 涉及计算的地方，先看公式页的示例，再用交互版计算器换成自己的数字。\n';
+    + '## 怎么用\n\n1. 先用上表把六个工艺阶段串起来，再进入某一阶段按工序读；专题可以按需要单独读。\n2. 每个工序先读“目的”，再看“关键参数”，最后用“机理与要点”解释这些参数为什么是这样。\n3. 读完一个工序就做它的自测题；术语不熟时查术语表。\n4. 涉及计算的地方，先看公式页的示例，再用交互版计算器换成自己的数字。\n';
 }
 function sidebar() {
-  return `**[首页](${link(HOME)})**\n\n` + D.STAGES.map(st => `- [${nn(st.n)} ${st.name}](${link(PAGES[st.n])})`).join('\n')
+  return `**[首页](${link(HOME)})**\n\n**工艺阶段**\n\n` + PROC().map(st => `- [${nn(st.n)} ${st.name}](${link(PAGES[st.n])})`).join('\n')
+    + '\n\n**专题**\n\n' + TOPICS().map(st => `- [${nn(st.n)} ${st.name}](${link(PAGES[st.n])})`).join('\n')
     + `\n\n- [计算工具与公式](${link('tools')})\n- [糖化、发酵程序与酶](${link('programmes')})\n- [术语表](${link('glossary')})\n- [自测题](${link('quiz')})\n- [来源与覆盖范围](${link('sources')})\n`;
 }
 
