@@ -1,0 +1,19 @@
+# 可选：pip install mkdocs 后运行 mkdocs serve 预览，mkdocs build 输出到 build/mkdocs/
+site_name: Kunze 酿造工艺 wiki
+docs_dir: wiki
+site_dir: build/mkdocs
+theme:
+  name: readthedocs
+nav:
+  - 首页: README.md
+  - 01 原料: 01-raw-materials.md
+  - 02 制麦: 02-malting.md
+  - 03 麦汁制备: 03-wort-production.md
+  - 04 发酵与成熟: 04-fermentation.md
+  - 05 过滤与稳定化: 05-filtration-stabilisation.md
+  - 06 灌装与收尾: 06-filling-cleaning.md
+  - 计算工具与公式: tools.md
+  - 糖化、发酵程序与酶: programmes.md
+  - 术语表: glossary.md
+  - 自测题: quiz.md
+  - 来源与覆盖范围: sources.md

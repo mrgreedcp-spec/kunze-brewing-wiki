@@ -1,0 +1,223 @@
+<title>Kunze 酿造工艺图谱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F3F5F2; --surface:#FFFFFF; --ink:#1C211E; --muted:#5A665F; --line:#DCE2DD;
+  --amber:#A85A08; --amber-soft:#F6E7D2; --hop:#476535; --hop-soft:#E3ECDB;
+  --warn:#9A3B1E; --code:#EEF1EC; --s-main:#2A78D6; --s-dec:#C9651A;
+  --serif:"Noto Serif SC","Songti SC","STSong",serif;
+  --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121614; --surface:#1A201D; --ink:#E4E9E5; --muted:#9BA8A0; --line:#2C3530;
+    --amber:#E8A04A; --amber-soft:#3A2A16; --hop:#A3C585; --hop-soft:#233021;
+    --warn:#F0A080; --code:#222A26; --s-main:#3987E5; --s-dec:#D9701F;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121614; --surface:#1A201D; --ink:#E4E9E5; --muted:#9BA8A0; --line:#2C3530;
+  --amber:#E8A04A; --amber-soft:#3A2A16; --hop:#A3C585; --hop-soft:#233021;
+  --warn:#F0A080; --code:#222A26; --s-main:#3987E5; --s-dec:#D9701F;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:14px}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.75;padding-inline:16px;padding-block:0 72px;-webkit-font-smoothing:antialiased}
+a{color:var(--amber);text-underline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto}
+header.top{padding-block:28px 4px}
+.eyebrow{font-size:12.5px;color:var(--muted);letter-spacing:.04em;margin:0 0 6px}
+h1{font-family:var(--serif);font-weight:800;font-size:clamp(26px,3.6vw,38px);line-height:1.25;margin:0;text-wrap:balance;letter-spacing:.01em}
+.lede{max-width:70ch;margin:10px 0 0}
+.bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:16px}
+.search{position:relative;flex:1 1 260px;max-width:420px}
+.search input{width:100%;font:inherit;font-size:14.5px;padding:9px 12px 9px 36px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+.search input:focus-visible{outline:2px solid var(--amber);outline-offset:1px}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.stats{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.stats b{color:var(--ink);font-family:var(--mono);font-weight:600}
+.count{font-size:13px;color:var(--muted)}
+/* 流程条 */
+.flow{margin-top:20px;overflow-x:auto;padding-bottom:6px}
+.flow ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(178px,1fr));gap:22px}
+.fs{position:relative}
+.fs+.fs::before{content:"";position:absolute;left:-19px;top:34px;width:14px;border-top:1.5px solid var(--muted)}
+.fs+.fs::after{content:"";position:absolute;left:-7px;top:29.5px;border:5px solid transparent;border-left:6px solid var(--muted)}
+.fs a{display:grid;gap:6px;align-content:start;height:100%;padding:13px 14px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);text-decoration:none;transition:border-color .15s}
+.fs a:hover{border-color:var(--amber)}
+.fs a:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.fs-top{display:flex;align-items:center;gap:10px}
+.fs-ic{width:40px;height:40px;flex:none;color:var(--hop)}
+.fs-no{font:600 12px/1.2 var(--mono);color:var(--amber)}
+.fs-nm{font:700 16px/1.3 var(--serif)}
+.fs-pg{font-size:11.5px;color:var(--muted)}
+.fs-io{font-size:12.5px;color:var(--muted);line-height:1.55}
+.fs-io b{color:var(--ink);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font:11.5px/1.45 var(--mono);padding:1px 7px;border-radius:6px;background:var(--code);color:var(--ink);white-space:nowrap}
+/* 布局 */
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;margin-top:26px}
+.idx{display:none}
+@media (min-width:1000px){
+  .layout{grid-template-columns:232px minmax(0,1fr)}
+  .idx{display:block;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);align-self:start;max-height:calc(100vh - 24px);overflow:auto;font-size:13px;line-height:1.5;padding-right:6px}
+}
+.idx h2{font:600 12px var(--sans);letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
+.idx ol{list-style:none;margin:0;padding:0}
+.idx .ist{margin-bottom:6px}
+.idx .ist>a{display:flex;gap:8px;font-weight:700;color:var(--ink);text-decoration:none;padding:4px 6px;border-radius:6px}
+.idx .ist>a span{font-family:var(--mono);color:var(--amber);font-weight:600}
+.idx .ist ol a{display:block;color:var(--muted);text-decoration:none;padding:2px 6px 2px 30px;border-radius:6px}
+.idx a:hover{background:var(--code)}
+.idx a.on{color:var(--ink);background:var(--amber-soft)}
+.idx .tl{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.idx .tl a{display:block;color:var(--muted);text-decoration:none;padding:2px 6px;border-radius:6px}
+main{min-width:0}
+section.stage{margin-top:46px}
+section.stage:first-child{margin-top:0}
+.st-h{display:grid;gap:6px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.st-no{font:600 13px var(--mono);color:var(--amber);letter-spacing:.04em}
+.st-h h2{font:800 clamp(22px,2.6vw,28px)/1.3 var(--serif);margin:0;text-wrap:balance}
+.st-sum{margin:0;max-width:70ch}
+.st-io{font-size:13.5px;color:var(--muted);margin:0}
+.st-io b{color:var(--ink);font-weight:500}
+/* 工序卡 */
+.step{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px 16px}
+.sp-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.sp-no{font:600 13px var(--mono);color:var(--amber)}
+.sp-h h3{font:700 19px/1.35 var(--serif);margin:0}
+.sp-en{font-size:13px;color:var(--muted)}
+.sp-pg{margin-left:auto;font:11.5px var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px;white-space:nowrap}
+.goal{margin:10px 0 0;max-width:74ch}
+.goal b{font-weight:700;color:var(--hop);margin-right:6px}
+.blk{margin-top:14px}
+.blk>h4{font:600 12.5px var(--sans);letter-spacing:.06em;color:var(--muted);margin:0 0 6px}
+.params{display:grid;grid-template-columns:minmax(120px,32%) minmax(0,1fr);margin:0;border-top:1px solid var(--line)}
+.params dt,.params dd{margin:0;padding:6px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.6}
+.params dt{color:var(--muted);padding-right:14px}
+.params dd{font-variant-numeric:tabular-nums}
+ul.pts{margin:0;padding-left:1.2em}
+ul.pts li{margin:4px 0;max-width:76ch}
+ul.pts li::marker{color:var(--hop)}
+.tbl{overflow-x:auto}
+.tbl table{width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.55}
+.tbl th{text-align:left;font-weight:600;color:var(--muted);font-size:12.5px;padding:6px 12px 6px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:7px 12px 7px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl td:first-child{font-weight:600}
+.tbl td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.qs{display:grid;gap:6px}
+.qs details{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--bg)}
+.qs summary{cursor:pointer;font-weight:500;list-style:none}
+.qs summary::-webkit-details-marker{display:none}
+.qs summary::before{content:"问";font:600 11px var(--mono);color:var(--surface);background:var(--hop);border-radius:5px;padding:1px 5px;margin-right:8px;vertical-align:1px}
+.qs summary:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.qs details[open] summary{margin-bottom:6px}
+.qs p{margin:0}
+.qs p::before{content:"答";font:600 11px var(--mono);color:var(--hop);border:1px solid var(--hop);border-radius:5px;padding:0 5px;margin-right:8px;vertical-align:1px}
+/* 计算工具 */
+.tool{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:var(--code);padding:14px 16px}
+.tool-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;font-weight:700}
+.tag{font:600 11px var(--mono);color:var(--amber);border:1px solid var(--amber);border-radius:5px;padding:0 6px}
+.tool-h .src{margin-left:auto;font:400 11.5px var(--mono);color:var(--muted)}
+.tool-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px 14px;margin-top:10px}
+.tool-g label{display:grid;gap:3px;font-size:12.5px;color:var(--muted);line-height:1.4}
+.tool-g .in{display:flex;align-items:center;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.tool-g .in:focus-within{outline:2px solid var(--amber);outline-offset:1px}
+.tool-g input{flex:1;min-width:0;font:15px var(--mono);color:var(--ink);background:transparent;border:0;padding:6px 8px;outline:none}
+.tool-g em{font-style:normal;font-size:12px;color:var(--muted);padding-right:8px;white-space:nowrap}
+.tool-o{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px 14px;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.out{display:grid;gap:1px;align-content:start}
+.out span{font-size:12.5px;color:var(--muted);line-height:1.4}
+.out b{font:600 19px/1.3 var(--mono);font-variant-numeric:tabular-nums}
+.out.main b{color:var(--amber)}
+.out small{font-size:12px;color:var(--muted)}
+.tool-n{margin:10px 0 0;font-size:13px;color:var(--muted);max-width:84ch}
+.tool-err{color:var(--warn);font-size:13px;margin:10px 0 0}
+/* 图 */
+figure.chart{margin:14px 0 0;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--surface)}
+.c-top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px 12px}
+.c-title{font-size:14px;font-weight:700}
+.legend{display:flex;gap:14px;font-size:12.5px;color:var(--muted)}
+.lk{display:inline-block;width:18px;height:0;border-top:2px solid var(--muted);vertical-align:4px;margin-right:6px}
+.lk.main{border-top-color:var(--s-main)} .lk.dec{border-top-color:var(--s-dec)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.seg button{font:inherit;font-size:13px;padding:3px 11px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.seg button:hover{border-color:var(--amber)}
+.seg button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.seg button[aria-pressed="true"]{border-color:var(--amber);background:var(--amber-soft);font-weight:600}
+.cwrap{overflow-x:auto;margin-top:8px}
+.cin{position:relative;min-width:600px}
+.cin svg{display:block;width:100%;height:auto}
+.cin svg:focus{outline:none}
+.cin svg:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.prog-d{font-size:13.5px;margin:8px 0 0;max-width:84ch}
+figure.chart figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;max-width:84ch}
+.tview{margin-top:8px}
+.tview summary{cursor:pointer;font-size:13px;font-weight:600}
+.tf-band{fill:var(--code)} .tf-band.alt{fill:transparent}
+.tf-bl{font-size:11px;fill:var(--muted)}
+.tf-yl{font-size:10.5px;fill:var(--muted)}
+.tf-grid{stroke:var(--line);stroke-width:1}
+.tf-base{stroke:var(--muted);stroke-width:1}
+.tf-ax{font-size:11px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.tf-s{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.tf-s.main{stroke:var(--s-main)} .tf-s.dec{stroke:var(--s-dec)}
+.tf-d{stroke:var(--surface);stroke-width:2} .tf-d.main{fill:var(--s-main)} .tf-d.dec{fill:var(--s-dec)}
+.tf-ev{fill:var(--muted)}
+.tf-evl{font-size:11px;fill:var(--ink)}
+.tf-x{stroke:var(--muted);stroke-width:1}
+.en-band{fill:var(--code)}
+.en-g{font-size:11.5px;font-weight:700;fill:var(--muted)}
+.en-n{font-size:12px;fill:var(--ink)}
+.en-bar,.en-pt{fill:var(--amber)}
+.en-fade{stroke:var(--amber);stroke-width:1.5;stroke-dasharray:3 3}
+.en-x{stroke:var(--muted);stroke-width:2;stroke-linecap:round}
+.en-v{font-size:11px;font-family:var(--mono);fill:var(--muted)}
+.en-hit{fill:transparent}
+.en-row.on .en-hit{fill:var(--amber-soft)}
+.mb{fill:var(--amber)} .mb-hit{fill:transparent} .mbg.on .mb{fill:var(--hop)}
+.mb-v{font-size:12px;font-weight:600;font-family:var(--mono);fill:var(--ink)}
+.mb-l{font-size:12px;fill:var(--muted)}
+.tt{position:absolute;top:8px;left:0;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:12.5px;line-height:1.55;box-shadow:0 2px 10px rgba(0,0,0,.1);min-width:150px;max-width:280px;z-index:2}
+.tt .h{color:var(--muted);font-size:12px}
+.tt .r{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.tt .r b{font-variant-numeric:tabular-nums}
+.tt .e{color:var(--muted);font-size:12px}
+footer.src{margin-top:60px;border-top:1px solid var(--line);padding-top:18px;font-size:13px;color:var(--muted)}
+footer.src p{max-width:92ch;margin:0 0 8px}
+.empty{margin-top:24px;color:var(--muted)}
+.flash{animation:fl 1.6s ease}
+@keyframes fl{0%{box-shadow:0 0 0 3px var(--amber)}100%{box-shadow:0 0 0 0 transparent}}
+@media (max-width:600px){
+  .step{padding:16px 14px 14px}
+  .params{grid-template-columns:minmax(0,1fr)}
+  .params dt{border-bottom:0;padding-bottom:0}
+  .params dd{padding-top:2px}
+  .sp-pg{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){.flash{animation:none}.fs a{transition:none}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">学习笔记 · 据 Kunze《Technology Brewing and Malting》第 3 版国际版（VLB Berlin, 2004）· 页码为原书印刷页码，自 p.32 起</p>
+    <h1>Kunze 酿造工艺图谱</h1>
+    <p class="lede">从大麦到瓶子，按原书顺序整理成 6 个阶段。每个工序写明它要达到的目的、关键参数、背后的机理和常见问题；书里的计算方法做成了可以改数的小工具。全部为中文自述，不是原文翻译。</p>
+    <div class="bar">
+      <label class="search" for="q"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg><input id="q" type="search" placeholder="搜索工序或术语，如 DMS、残碱度、PVPP" autocomplete="off" aria-label="搜索工序或术语"></label>
+      <div class="stats" id="stats"></div>
+      <div class="count" id="count" aria-live="polite"></div>
+    </div>
+  </header>
+  <nav class="flow" aria-label="六个阶段"><ol id="flow"></ol></nav>
+  <div class="layout">
+    <aside class="idx" aria-label="目录"><h2>目录</h2><ol id="idx"></ol><div class="tl" id="idx-tools"></div></aside>
+    <main id="main"></main>
+  </div>
+  <footer class="src" id="src"></footer>
+</div>

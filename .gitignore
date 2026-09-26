@@ -1,0 +1,11 @@
+# 原书、扫描件、OCR 结果和贴近原文的笔记只放本地，不进入仓库
+source-material/
+ocr/
+*.pdf
+*.djvu
+*.epub
+
+# 生成物与本地环境
+build/
+node_modules/
+.DS_Store

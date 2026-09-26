@@ -1,0 +1,11 @@
+{
+  "name": "kunze-brewing-wiki",
+  "private": true,
+  "type": "module",
+  "description": "Kunze《Technology Brewing and Malting》中文酿造工艺学习 wiki：结构化数据 → 交互网页 + Markdown wiki",
+  "scripts": {
+    "build": "node scripts/build_site.mjs && node scripts/build_wiki.mjs",
+    "build:gh-wiki": "node scripts/build_wiki.mjs --gh-wiki build/gh-wiki"
+  },
+  "engines": { "node": ">=18" }
+}

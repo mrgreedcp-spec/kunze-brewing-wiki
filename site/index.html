@@ -1,0 +1,842 @@
+<title>Kunze 酿造工艺图谱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F3F5F2; --surface:#FFFFFF; --ink:#1C211E; --muted:#5A665F; --line:#DCE2DD;
+  --amber:#A85A08; --amber-soft:#F6E7D2; --hop:#476535; --hop-soft:#E3ECDB;
+  --warn:#9A3B1E; --code:#EEF1EC; --s-main:#2A78D6; --s-dec:#C9651A;
+  --serif:"Noto Serif SC","Songti SC","STSong",serif;
+  --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121614; --surface:#1A201D; --ink:#E4E9E5; --muted:#9BA8A0; --line:#2C3530;
+    --amber:#E8A04A; --amber-soft:#3A2A16; --hop:#A3C585; --hop-soft:#233021;
+    --warn:#F0A080; --code:#222A26; --s-main:#3987E5; --s-dec:#D9701F;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121614; --surface:#1A201D; --ink:#E4E9E5; --muted:#9BA8A0; --line:#2C3530;
+  --amber:#E8A04A; --amber-soft:#3A2A16; --hop:#A3C585; --hop-soft:#233021;
+  --warn:#F0A080; --code:#222A26; --s-main:#3987E5; --s-dec:#D9701F;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:14px}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.75;padding-inline:16px;padding-block:0 72px;-webkit-font-smoothing:antialiased}
+a{color:var(--amber);text-underline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto}
+header.top{padding-block:28px 4px}
+.eyebrow{font-size:12.5px;color:var(--muted);letter-spacing:.04em;margin:0 0 6px}
+h1{font-family:var(--serif);font-weight:800;font-size:clamp(26px,3.6vw,38px);line-height:1.25;margin:0;text-wrap:balance;letter-spacing:.01em}
+.lede{max-width:70ch;margin:10px 0 0}
+.bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:16px}
+.search{position:relative;flex:1 1 260px;max-width:420px}
+.search input{width:100%;font:inherit;font-size:14.5px;padding:9px 12px 9px 36px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+.search input:focus-visible{outline:2px solid var(--amber);outline-offset:1px}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.stats{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.stats b{color:var(--ink);font-family:var(--mono);font-weight:600}
+.count{font-size:13px;color:var(--muted)}
+/* 流程条 */
+.flow{margin-top:20px;overflow-x:auto;padding-bottom:6px}
+.flow ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(178px,1fr));gap:22px}
+.fs{position:relative}
+.fs+.fs::before{content:"";position:absolute;left:-19px;top:34px;width:14px;border-top:1.5px solid var(--muted)}
+.fs+.fs::after{content:"";position:absolute;left:-7px;top:29.5px;border:5px solid transparent;border-left:6px solid var(--muted)}
+.fs a{display:grid;gap:6px;align-content:start;height:100%;padding:13px 14px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);text-decoration:none;transition:border-color .15s}
+.fs a:hover{border-color:var(--amber)}
+.fs a:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.fs-top{display:flex;align-items:center;gap:10px}
+.fs-ic{width:40px;height:40px;flex:none;color:var(--hop)}
+.fs-no{font:600 12px/1.2 var(--mono);color:var(--amber)}
+.fs-nm{font:700 16px/1.3 var(--serif)}
+.fs-pg{font-size:11.5px;color:var(--muted)}
+.fs-io{font-size:12.5px;color:var(--muted);line-height:1.55}
+.fs-io b{color:var(--ink);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font:11.5px/1.45 var(--mono);padding:1px 7px;border-radius:6px;background:var(--code);color:var(--ink);white-space:nowrap}
+/* 布局 */
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;margin-top:26px}
+.idx{display:none}
+@media (min-width:1000px){
+  .layout{grid-template-columns:232px minmax(0,1fr)}
+  .idx{display:block;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);align-self:start;max-height:calc(100vh - 24px);overflow:auto;font-size:13px;line-height:1.5;padding-right:6px}
+}
+.idx h2{font:600 12px var(--sans);letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
+.idx ol{list-style:none;margin:0;padding:0}
+.idx .ist{margin-bottom:6px}
+.idx .ist>a{display:flex;gap:8px;font-weight:700;color:var(--ink);text-decoration:none;padding:4px 6px;border-radius:6px}
+.idx .ist>a span{font-family:var(--mono);color:var(--amber);font-weight:600}
+.idx .ist ol a{display:block;color:var(--muted);text-decoration:none;padding:2px 6px 2px 30px;border-radius:6px}
+.idx a:hover{background:var(--code)}
+.idx a.on{color:var(--ink);background:var(--amber-soft)}
+.idx .tl{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.idx .tl a{display:block;color:var(--muted);text-decoration:none;padding:2px 6px;border-radius:6px}
+main{min-width:0}
+section.stage{margin-top:46px}
+section.stage:first-child{margin-top:0}
+.st-h{display:grid;gap:6px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.st-no{font:600 13px var(--mono);color:var(--amber);letter-spacing:.04em}
+.st-h h2{font:800 clamp(22px,2.6vw,28px)/1.3 var(--serif);margin:0;text-wrap:balance}
+.st-sum{margin:0;max-width:70ch}
+.st-io{font-size:13.5px;color:var(--muted);margin:0}
+.st-io b{color:var(--ink);font-weight:500}
+/* 工序卡 */
+.step{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px 16px}
+.sp-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.sp-no{font:600 13px var(--mono);color:var(--amber)}
+.sp-h h3{font:700 19px/1.35 var(--serif);margin:0}
+.sp-en{font-size:13px;color:var(--muted)}
+.sp-pg{margin-left:auto;font:11.5px var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px;white-space:nowrap}
+.goal{margin:10px 0 0;max-width:74ch}
+.goal b{font-weight:700;color:var(--hop);margin-right:6px}
+.blk{margin-top:14px}
+.blk>h4{font:600 12.5px var(--sans);letter-spacing:.06em;color:var(--muted);margin:0 0 6px}
+.params{display:grid;grid-template-columns:minmax(120px,32%) minmax(0,1fr);margin:0;border-top:1px solid var(--line)}
+.params dt,.params dd{margin:0;padding:6px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.6}
+.params dt{color:var(--muted);padding-right:14px}
+.params dd{font-variant-numeric:tabular-nums}
+ul.pts{margin:0;padding-left:1.2em}
+ul.pts li{margin:4px 0;max-width:76ch}
+ul.pts li::marker{color:var(--hop)}
+.tbl{overflow-x:auto}
+.tbl table{width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.55}
+.tbl th{text-align:left;font-weight:600;color:var(--muted);font-size:12.5px;padding:6px 12px 6px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:7px 12px 7px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl td:first-child{font-weight:600}
+.tbl td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.qs{display:grid;gap:6px}
+.qs details{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--bg)}
+.qs summary{cursor:pointer;font-weight:500;list-style:none}
+.qs summary::-webkit-details-marker{display:none}
+.qs summary::before{content:"问";font:600 11px var(--mono);color:var(--surface);background:var(--hop);border-radius:5px;padding:1px 5px;margin-right:8px;vertical-align:1px}
+.qs summary:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.qs details[open] summary{margin-bottom:6px}
+.qs p{margin:0}
+.qs p::before{content:"答";font:600 11px var(--mono);color:var(--hop);border:1px solid var(--hop);border-radius:5px;padding:0 5px;margin-right:8px;vertical-align:1px}
+/* 计算工具 */
+.tool{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:var(--code);padding:14px 16px}
+.tool-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;font-weight:700}
+.tag{font:600 11px var(--mono);color:var(--amber);border:1px solid var(--amber);border-radius:5px;padding:0 6px}
+.tool-h .src{margin-left:auto;font:400 11.5px var(--mono);color:var(--muted)}
+.tool-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px 14px;margin-top:10px}
+.tool-g label{display:grid;gap:3px;font-size:12.5px;color:var(--muted);line-height:1.4}
+.tool-g .in{display:flex;align-items:center;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.tool-g .in:focus-within{outline:2px solid var(--amber);outline-offset:1px}
+.tool-g input{flex:1;min-width:0;font:15px var(--mono);color:var(--ink);background:transparent;border:0;padding:6px 8px;outline:none}
+.tool-g em{font-style:normal;font-size:12px;color:var(--muted);padding-right:8px;white-space:nowrap}
+.tool-o{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px 14px;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.out{display:grid;gap:1px;align-content:start}
+.out span{font-size:12.5px;color:var(--muted);line-height:1.4}
+.out b{font:600 19px/1.3 var(--mono);font-variant-numeric:tabular-nums}
+.out.main b{color:var(--amber)}
+.out small{font-size:12px;color:var(--muted)}
+.tool-n{margin:10px 0 0;font-size:13px;color:var(--muted);max-width:84ch}
+.tool-err{color:var(--warn);font-size:13px;margin:10px 0 0}
+/* 图 */
+figure.chart{margin:14px 0 0;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--surface)}
+.c-top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px 12px}
+.c-title{font-size:14px;font-weight:700}
+.legend{display:flex;gap:14px;font-size:12.5px;color:var(--muted)}
+.lk{display:inline-block;width:18px;height:0;border-top:2px solid var(--muted);vertical-align:4px;margin-right:6px}
+.lk.main{border-top-color:var(--s-main)} .lk.dec{border-top-color:var(--s-dec)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.seg button{font:inherit;font-size:13px;padding:3px 11px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.seg button:hover{border-color:var(--amber)}
+.seg button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.seg button[aria-pressed="true"]{border-color:var(--amber);background:var(--amber-soft);font-weight:600}
+.cwrap{overflow-x:auto;margin-top:8px}
+.cin{position:relative;min-width:600px}
+.cin svg{display:block;width:100%;height:auto}
+.cin svg:focus{outline:none}
+.cin svg:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.prog-d{font-size:13.5px;margin:8px 0 0;max-width:84ch}
+figure.chart figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;max-width:84ch}
+.tview{margin-top:8px}
+.tview summary{cursor:pointer;font-size:13px;font-weight:600}
+.tf-band{fill:var(--code)} .tf-band.alt{fill:transparent}
+.tf-bl{font-size:11px;fill:var(--muted)}
+.tf-yl{font-size:10.5px;fill:var(--muted)}
+.tf-grid{stroke:var(--line);stroke-width:1}
+.tf-base{stroke:var(--muted);stroke-width:1}
+.tf-ax{font-size:11px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.tf-s{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.tf-s.main{stroke:var(--s-main)} .tf-s.dec{stroke:var(--s-dec)}
+.tf-d{stroke:var(--surface);stroke-width:2} .tf-d.main{fill:var(--s-main)} .tf-d.dec{fill:var(--s-dec)}
+.tf-ev{fill:var(--muted)}
+.tf-evl{font-size:11px;fill:var(--ink)}
+.tf-x{stroke:var(--muted);stroke-width:1}
+.en-band{fill:var(--code)}
+.en-g{font-size:11.5px;font-weight:700;fill:var(--muted)}
+.en-n{font-size:12px;fill:var(--ink)}
+.en-bar,.en-pt{fill:var(--amber)}
+.en-fade{stroke:var(--amber);stroke-width:1.5;stroke-dasharray:3 3}
+.en-x{stroke:var(--muted);stroke-width:2;stroke-linecap:round}
+.en-v{font-size:11px;font-family:var(--mono);fill:var(--muted)}
+.en-hit{fill:transparent}
+.en-row.on .en-hit{fill:var(--amber-soft)}
+.mb{fill:var(--amber)} .mb-hit{fill:transparent} .mbg.on .mb{fill:var(--hop)}
+.mb-v{font-size:12px;font-weight:600;font-family:var(--mono);fill:var(--ink)}
+.mb-l{font-size:12px;fill:var(--muted)}
+.tt{position:absolute;top:8px;left:0;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:12.5px;line-height:1.55;box-shadow:0 2px 10px rgba(0,0,0,.1);min-width:150px;max-width:280px;z-index:2}
+.tt .h{color:var(--muted);font-size:12px}
+.tt .r{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.tt .r b{font-variant-numeric:tabular-nums}
+.tt .e{color:var(--muted);font-size:12px}
+footer.src{margin-top:60px;border-top:1px solid var(--line);padding-top:18px;font-size:13px;color:var(--muted)}
+footer.src p{max-width:92ch;margin:0 0 8px}
+.empty{margin-top:24px;color:var(--muted)}
+.flash{animation:fl 1.6s ease}
+@keyframes fl{0%{box-shadow:0 0 0 3px var(--amber)}100%{box-shadow:0 0 0 0 transparent}}
+@media (max-width:600px){
+  .step{padding:16px 14px 14px}
+  .params{grid-template-columns:minmax(0,1fr)}
+  .params dt{border-bottom:0;padding-bottom:0}
+  .params dd{padding-top:2px}
+  .sp-pg{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){.flash{animation:none}.fs a{transition:none}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">学习笔记 · 据 Kunze《Technology Brewing and Malting》第 3 版国际版（VLB Berlin, 2004）· 页码为原书印刷页码，自 p.32 起</p>
+    <h1>Kunze 酿造工艺图谱</h1>
+    <p class="lede">从大麦到瓶子，按原书顺序整理成 6 个阶段。每个工序写明它要达到的目的、关键参数、背后的机理和常见问题；书里的计算方法做成了可以改数的小工具。全部为中文自述，不是原文翻译。</p>
+    <div class="bar">
+      <label class="search" for="q"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg><input id="q" type="search" placeholder="搜索工序或术语，如 DMS、残碱度、PVPP" autocomplete="off" aria-label="搜索工序或术语"></label>
+      <div class="stats" id="stats"></div>
+      <div class="count" id="count" aria-live="polite"></div>
+    </div>
+  </header>
+  <nav class="flow" aria-label="六个阶段"><ol id="flow"></ol></nav>
+  <div class="layout">
+    <aside class="idx" aria-label="目录"><h2>目录</h2><ol id="idx"></ol><div class="tl" id="idx-tools"></div></aside>
+    <main id="main"></main>
+  </div>
+  <footer class="src" id="src"></footer>
+</div>
+<script>
+/* ---------- 通用 ---------- */
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=(n,d=1)=>Number.isFinite(n)?n.toLocaleString('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d}):'—';
+const smooth=()=>matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
+/* ASBC/Plato 多项式：°P → 比重 SG(20/20)；乘 0.998203 得 SG(20/4) */
+const sg2020=p=>1.0000131+0.00386777*p+1.27447e-5*p*p+6.34964e-8*p*p*p;
+function interp(pts,x){
+  if(x<pts[0][0]-1e-9||x>pts[pts.length-1][0]+1e-9)return null;
+  for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i];if(x<=b[0]+1e-9)return b[0]===a[0]?b[1]:a[1]+(b[1]-a[1])*(x-a[0])/(b[0]-a[0])}
+  return pts[pts.length-1][1];
+}
+function interpSegs(segs,x){for(const p of segs){if(p.length<2)continue;const v=interp(p,x);if(v!=null)return v}return null}
+function placeTip(tt,host,px,W){
+  const r=host.getBoundingClientRect(),left=px*r.width/W,tw=tt.offsetWidth;
+  tt.style.left=(left+14+tw>r.width?Math.max(0,left-14-tw):left+14)+'px';
+}
+
+/* ---------- 折线图（支持分段、横向温度带、事件标记） ---------- */
+function lineChart(el,cfg){
+  const W=720,H=cfg.h,m={t:30,r:cfg.mr||28,b:44,l:48},pw=W-m.l-m.r,ph=H-m.t-m.b;
+  const sx=x=>m.l+(x-cfg.x0)/(cfg.x1-cfg.x0)*pw, sy=y=>m.t+ph-(y-cfg.y0)/(cfg.y1-cfg.y0)*ph, f=n=>Math.round(n*10)/10;
+  let s='';
+  (cfg.ybands||[]).forEach(b=>{s+=`<rect class="tf-band" x="${m.l}" y="${f(sy(b[1]))}" width="${pw}" height="${f(sy(b[0])-sy(b[1]))}"/><text class="tf-yl" x="${W-m.r+6}" y="${f(sy(b[0])-2)}">${esc(b[2])}</text>`});
+  (cfg.bands||[]).forEach((b,i)=>{s+=`<rect class="tf-band${i%2?' alt':''}" x="${f(sx(b[0]))}" y="${m.t}" width="${f(sx(b[1])-sx(b[0]))}" height="${ph}"/><text class="tf-bl" x="${f((sx(b[0])+sx(b[1]))/2)}" y="${m.t-9}" text-anchor="middle">${esc(b[2])}</text>`});
+  cfg.yt.forEach(v=>{s+=`<line class="tf-grid" x1="${m.l}" x2="${W-m.r}" y1="${f(sy(v))}" y2="${f(sy(v))}"/><text class="tf-ax" x="${m.l-8}" y="${f(sy(v)+4)}" text-anchor="end">${v}</text>`});
+  cfg.xt.forEach(v=>{s+=`<text class="tf-ax" x="${f(sx(v))}" y="${H-m.b+17}" text-anchor="middle">${v}</text>`});
+  s+=`<line class="tf-base" x1="${m.l}" x2="${W-m.r}" y1="${f(sy(cfg.y0))}" y2="${f(sy(cfg.y0))}"/>`;
+  s+=`<text class="tf-ax" x="${W-m.r}" y="${H-8}" text-anchor="end">${esc(cfg.xTitle)}</text><text class="tf-ax" x="${m.l-8}" y="${m.t-15}" text-anchor="end">°C</text>`;
+  cfg.series.forEach(se=>{
+    se.segs.forEach(p=>{if(p.length>1)s+=`<polyline class="tf-s ${se.cls}" points="${p.map(q=>f(sx(q[0]))+','+f(sy(q[1]))).join(' ')}"/>`});
+    if(se.dot){const p=se.segs[se.segs.length-1],e=p[p.length-1];s+=`<circle class="tf-d ${se.cls}" cx="${f(sx(e[0]))}" cy="${f(sy(e[1]))}" r="4"/>`}
+  });
+  (cfg.events||[]).forEach(ev=>{const x=sx(ev.x),y=sy(ev.y);s+=`<path class="tf-ev" d="M${f(x-4)},${f(y-12)} L${f(x+4)},${f(y-12)} L${f(x)},${f(y-5)} Z"/><text class="tf-evl" x="${f(x+(ev.dx||0))}" y="${f(y-16)}" text-anchor="${ev.a||'middle'}">${esc(ev.t)}</text>`});
+  s+=`<line class="tf-x" x1="0" x2="0" y1="${m.t}" y2="${m.t+ph}" visibility="hidden"/>`;
+  cfg.series.forEach(se=>{s+=`<circle class="tf-d ${se.cls} tf-hd" r="4.5" visibility="hidden"/>`});
+  s+=`<rect x="${m.l}" y="${m.t}" width="${pw}" height="${ph}" fill="transparent"/>`;
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" tabindex="0" aria-label="${esc(cfg.aria)}">${s}</svg><div class="tt" hidden></div>`;
+  const svg=el.querySelector('svg'),tt=el.querySelector('.tt'),xl=svg.querySelector('.tf-x'),hd=[...svg.querySelectorAll('.tf-hd')];
+  let cx=null;
+  function show(x){
+    x=Math.max(cfg.x0,Math.min(cfg.x1,Math.round(x/cfg.step)*cfg.step));x=Math.round(x*100)/100;cx=x;
+    const px=sx(x);
+    xl.setAttribute('x1',px);xl.setAttribute('x2',px);xl.setAttribute('visibility','visible');
+    tt.replaceChildren();
+    const h=document.createElement('div');h.className='h';h.textContent=cfg.xLabel(x);tt.appendChild(h);
+    cfg.series.forEach((se,i)=>{
+      const v=interpSegs(se.segs,x);
+      if(v==null){hd[i].setAttribute('visibility','hidden');return}
+      hd[i].setAttribute('cx',px);hd[i].setAttribute('cy',sy(v));hd[i].setAttribute('visibility','visible');
+      const r=document.createElement('div');r.className='r';
+      const k=document.createElement('i');k.className='lk '+se.cls;
+      const b=document.createElement('b');b.textContent=fmt(v,1)+' °C';
+      const n=document.createElement('span');n.textContent=se.name;
+      r.append(k,b,n);tt.appendChild(r);
+    });
+    (cfg.events||[]).filter(ev=>Math.abs(ev.x-x)<=cfg.step*2).forEach(ev=>{const e=document.createElement('div');e.className='e';e.textContent=ev.d;tt.appendChild(e)});
+    tt.hidden=false;placeTip(tt,svg,px,W);
+  }
+  function hide(){xl.setAttribute('visibility','hidden');hd.forEach(d=>d.setAttribute('visibility','hidden'));tt.hidden=true}
+  const toX=ev=>{const r=svg.getBoundingClientRect();return cfg.x0+((ev.clientX-r.left)/r.width*W-m.l)/pw*(cfg.x1-cfg.x0)};
+  svg.addEventListener('pointermove',ev=>show(toX(ev)));
+  svg.addEventListener('pointerdown',ev=>show(toX(ev)));
+  svg.addEventListener('pointerleave',hide);
+  svg.addEventListener('focus',()=>show(cx??cfg.x0));
+  svg.addEventListener('blur',hide);
+  svg.addEventListener('keydown',ev=>{
+    const k=ev.key,d=cfg.step*(ev.shiftKey?10:1);
+    if(k==='ArrowRight'||k==='ArrowLeft'){ev.preventDefault();show((cx??cfg.x0)+(k==='ArrowRight'?d:-d))}
+    else if(k==='Home'){ev.preventDefault();show(cfg.x0)}
+    else if(k==='End'){ev.preventDefault();show(cfg.x1)}
+    else if(k==='Escape')hide();
+  });
+}
+
+/* ---------- 酶的温度窗口 ---------- */
+const ENZ=[
+  {g:'细胞壁（β-葡聚糖）'},
+  {n:'内切 β-1,4-葡聚糖酶',a:40,b:45,note:'很怕热，升温后很快失活；书中正文也写作 45–50 °C。溶解差的麦芽靠它在低温段补救。'},
+  {n:'内切 β-1,3-葡聚糖酶',a:60,note:'约 60 °C。'},
+  {n:'β-葡聚糖溶解酶',a:62,note:'耐热。把高分子 β-葡聚糖从蛋白结合中释放出来，但不分解它，所以溶解差的麦芽在高温段会释放出大量高分子 β-葡聚糖。'},
+  {g:'蛋白'},
+  {n:'内肽酶',a:45,b:50,note:'把蛋白切成肽。'},
+  {n:'羧肽酶',a:50,note:'约 50 °C，从羧基端释放氨基酸。'},
+  {n:'氨肽酶、二肽酶',a:45,note:'约 45 °C，生成氨基酸（酵母营养 FAN）。溶解好的麦芽不需要长时间停在这里，否则泡沫变差。'},
+  {g:'淀粉与糖'},
+  {n:'麦芽糖酶',a:45,note:'约 45 °C。一次煮出法中加一段 45 °C 休止，葡萄糖可升到 35–40%，小麦啤酒的酯香随之增强。'},
+  {n:'界限糊精酶',a:50,b:60,x:70,xt:'70 °C 时已很弱',note:'能切开 1,6 支点，但在常规糖化中作用有限，所以麦汁里总留有界限糊精。'},
+  {n:'β-淀粉酶',a:60,b:65,x:70,xt:'70 °C 迅速失活',ph:'5.4–5.5',note:'从链的非还原端切下麦芽糖。62–63 °C 长休止得到最多麦芽糖、最高发酵度。'},
+  {n:'α-淀粉酶',a:72,b:75,x:80,xt:'约 80 °C 被破坏',ph:'5.6–5.8',note:'把长链切成 7–12 个葡萄糖的糊精，迅速降低糊化醪的黏度（液化）。终止温度不宜超过约 78 °C，留它完成过滤中的后糖化。'}
+];
+const RESTS=[[45,50,'蛋白/葡聚糖'],[62,65,'麦芽糖'],[72,75,'糖化'],[76,78,'终止']];
+const rng=e=>e.b!=null?`${e.a}–${e.b}`:`≈${e.a}`;
+function enzChart(el){
+  const W=720,m={t:34,r:70,b:34,l:176},x0=35,x1=85,pw=W-m.l-m.r;
+  const sx=v=>m.l+(v-x0)/(x1-x0)*pw,f=n=>Math.round(n*10)/10;
+  let y=m.t;const rows=[];
+  ENZ.forEach(e=>{if(e.g){rows.push({g:e.g,y:y+15});y+=22}else{rows.push({e,y});y+=26}});
+  const yb=y,H=yb+m.b;let s='';
+  RESTS.forEach(r=>{s+=`<rect class="en-band" x="${f(sx(r[0]))}" y="${m.t}" width="${f(sx(r[1])-sx(r[0]))}" height="${yb-m.t}"/><text class="tf-bl" x="${f((sx(r[0])+sx(r[1]))/2)}" y="${m.t-10}" text-anchor="middle">${r[2]}</text>`});
+  for(let v=40;v<=85;v+=5)s+=`<line class="tf-grid" x1="${f(sx(v))}" x2="${f(sx(v))}" y1="${m.t}" y2="${yb}"/><text class="tf-ax" x="${f(sx(v))}" y="${yb+17}" text-anchor="middle">${v}</text>`;
+  s+=`<text class="tf-ax" x="${W-m.r}" y="${H-5}" text-anchor="end">温度 °C</text>`;
+  rows.forEach((r,i)=>{
+    if(r.g){s+=`<text class="en-g" x="${m.l-12}" y="${r.y}" text-anchor="end">${esc(r.g)}</text>`;return}
+    const e=r.e,cy=r.y+13;let end=sx(e.b??e.a);
+    s+=`<g class="en-row" data-i="${i}"><rect class="en-hit" x="0" y="${r.y}" width="${W}" height="26"/><text class="en-n" x="${m.l-12}" y="${cy+4}" text-anchor="end">${esc(e.n)}</text>`;
+    if(e.b!=null)s+=`<rect class="en-bar" x="${f(sx(e.a))}" y="${cy-5}" width="${f(sx(e.b)-sx(e.a))}" height="10" rx="3"/>`;
+    else{s+=`<circle class="en-pt" cx="${f(sx(e.a))}" cy="${cy}" r="5"/>`;end+=5}
+    if(e.x!=null){const xx=sx(e.x);s+=`<line class="en-fade" x1="${f(end+3)}" x2="${f(xx-6)}" y1="${cy}" y2="${cy}"/><path class="en-x" d="M${f(xx-4)},${f(cy-4)}L${f(xx+4)},${f(cy+4)}M${f(xx+4)},${f(cy-4)}L${f(xx-4)},${f(cy+4)}"/>`;end=xx+4}
+    s+=`<text class="en-v" x="${f(end+8)}" y="${cy+4}">${rng(e)}</text></g>`;
+  });
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" tabindex="0" aria-label="麦芽主要酶的最适温度窗口，以及 45–50、62–65、72–75、76–78 °C 四段糖化休止温度">${s}</svg><div class="tt" hidden></div>`;
+  const svg=el.querySelector('svg'),tt=el.querySelector('.tt'),gs=[...svg.querySelectorAll('.en-row')];let cur=-1;
+  function show(k){
+    gs.forEach(g=>g.classList.remove('on'));cur=k;const g=gs[k];g.classList.add('on');
+    const e=rows[+g.dataset.i].e;tt.replaceChildren();
+    const h=document.createElement('div');h.className='r';const b=document.createElement('b');b.textContent=e.n;h.appendChild(b);tt.appendChild(h);
+    const add=t=>{const d=document.createElement('div');d.className='e';d.textContent=t;tt.appendChild(d)};
+    add('最适温度 '+rng(e)+' °C'+(e.ph?'，最适 pH '+e.ph:''));if(e.xt)add(e.xt);add(e.note);
+    tt.hidden=false;tt.style.top=Math.min(rows[+g.dataset.i].y+30,(H-60))*svg.getBoundingClientRect().height/H+'px';placeTip(tt,svg,sx(e.b??e.a),W);
+  }
+  function hide(){gs.forEach(g=>g.classList.remove('on'));tt.hidden=true}
+  gs.forEach((g,k)=>{g.addEventListener('pointerenter',()=>show(k));g.addEventListener('pointerdown',()=>show(k))});
+  svg.addEventListener('pointerleave',hide);svg.addEventListener('blur',hide);
+  svg.addEventListener('focus',()=>show(cur<0?0:cur));
+  svg.addEventListener('keydown',ev=>{if(ev.key==='ArrowDown'||ev.key==='ArrowUp'){ev.preventDefault();show(Math.max(0,Math.min(gs.length-1,(cur<0?0:cur)+(ev.key==='ArrowDown'?1:-1))))}else if(ev.key==='Escape')hide()});
+}
+function enzTable(){
+  return `<div class="tbl"><table><tr><th>酶</th><th>最适温度 °C</th><th>最适 pH</th><th>失活</th><th>说明</th></tr>${ENZ.filter(e=>!e.g).map(e=>`<tr><td>${esc(e.n)}</td><td class="num">${rng(e)}</td><td class="num">${e.ph||'—'}</td><td>${esc(e.xt||'—')}</td><td>${esc(e.note)}</td></tr>`).join('')}</table></div>`;
+}
+
+/* ---------- 制麦物料流 ---------- */
+const MALT=[['清选大麦',100,'含水约 12–14%'],['浸渍大麦',148,'吸水到 44–46%，体积膨胀约 40–45%'],['绿麦芽',140,'发芽中呼吸消耗淀粉、长出根芽'],['出炉麦芽',78,'焙焦把水分降到 5% 以下，随后除去约 3–4% 的麦根'],['贮存后麦芽',80,'贮存中回潮到 4–5%']];
+function maltChart(el){
+  const W=720,H=250,m={t:28,r:16,b:40,l:46},pw=W-m.l-m.r,ph=H-m.t-m.b,y1=160;
+  const sy=v=>m.t+ph-v/y1*ph,f=n=>Math.round(n*10)/10,slot=pw/MALT.length,bw=slot*0.5;
+  let s='';
+  [0,40,80,120,160].forEach(v=>{s+=`<line class="tf-grid" x1="${m.l}" x2="${W-m.r}" y1="${f(sy(v))}" y2="${f(sy(v))}"/><text class="tf-ax" x="${m.l-8}" y="${f(sy(v)+4)}" text-anchor="end">${v}</text>`});
+  s+=`<text class="tf-ax" x="${m.l-8}" y="${m.t-12}" text-anchor="end">kg</text>`;
+  MALT.forEach((d,i)=>{
+    const x=m.l+slot*i+(slot-bw)/2,y=sy(d[1]),b=sy(0);
+    s+=`<g class="mbg" data-i="${i}"><rect class="mb-hit" x="${f(m.l+slot*i)}" y="${m.t}" width="${f(slot)}" height="${ph+30}"/><path class="mb" d="M${f(x)},${f(b)}V${f(y+4)}Q${f(x)},${f(y)} ${f(x+4)},${f(y)}H${f(x+bw-4)}Q${f(x+bw)},${f(y)} ${f(x+bw)},${f(y+4)}V${f(b)}Z"/><text class="mb-v" x="${f(x+bw/2)}" y="${f(y-7)}" text-anchor="middle">${d[1]} kg</text><text class="mb-l" x="${f(x+bw/2)}" y="${f(b+18)}" text-anchor="middle">${d[0]}</text></g>`;
+  });
+  s+=`<line class="tf-base" x1="${m.l}" x2="${W-m.r}" y1="${f(sy(0))}" y2="${f(sy(0))}"/>`;
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="淡色麦芽制麦中的物料质量变化：100 kg 大麦依次为 148、140、78、80 kg">${s}</svg><div class="tt" hidden></div>`;
+  const svg=el.querySelector('svg'),tt=el.querySelector('.tt'),gs=[...svg.querySelectorAll('.mbg')];
+  gs.forEach(g=>{const on=()=>{gs.forEach(o=>o.classList.remove('on'));g.classList.add('on');const d=MALT[+g.dataset.i];tt.innerHTML=`<div class="r"><b>${d[0]}</b><span>${d[1]} kg</span></div><div class="e">${esc(d[2])}</div>`;tt.hidden=false;placeTip(tt,svg,m.l+slot*(+g.dataset.i)+slot/2,W)};g.addEventListener('pointerenter',on);g.addEventListener('pointerdown',on)});
+  svg.addEventListener('pointerleave',()=>{gs.forEach(o=>o.classList.remove('on'));tt.hidden=true});
+}
+
+/* ---------- 计算工具 ---------- */
+const CO2T=[[0,.317],[1,.306],[2,.296],[3,.286],[4,.276],[5,.267],[6,.258],[8,.241],[10,.226],[15,.193],[20,.165]];
+function co2sol(t){if(t<0)return .317+(.317-.306)*(-t);return interp(CO2T,Math.min(20,t))}
+const TOOLS={
+decoct:{t:'煮出醪量',src:'p.244–245',f:[['V','总醪量',120,'hl',1],['Tr','未煮醪（休止）温度',50,'°C',1],['Tt','回混后目标温度',64,'°C',1],['Tb','煮沸醪回混时的有效温度',90,'°C',1]],
+ c:v=>{if(!(v.Tt>v.Tr))return{err:'目标温度要高于当前休止温度。'};if(!(v.Tb>v.Tt))return{err:'回混温度要高于目标温度。'};const d=(v.Tt-v.Tr)*v.V/(v.Tb-v.Tr);return{o:[['需煮沸的稠醪',fmt(d,1),'hl',1],['占总醪',fmt(d/v.V*100,0),'%'],['留在锅里不煮',fmt(v.V-d,1),'hl']]}},
+ n:'煮出醪量 = 升温幅度 × 总醪量 ÷（90 °C − 未煮醪温度）。90 °C 是煮沸醪泵回时考虑降温后的有效温度；经验值约为总醪的 1/4–1/3。书中 p.245 示例的算术有排印错误，按公式应为 45.5 hl。'},
+water:{t:'投料水与头道麦汁浓度',src:'p.234–235',f:[['G','投料（粉）',3000,'kg',50],['P','目标头道麦汁浓度',18,'%',.5]],
+ c:v=>{if(!(v.P>0))return{err:'浓度要大于 0。'};const w=v.G/100*3*20/v.P;return{o:[['投料水',fmt(w,1),'hl',1],['醪体积约',fmt(w+v.G*.7/100,1),'hl'],['料水比',fmt(w*100/v.G,1),'L/kg']]}},
+ n:'经验法则：100 kg 粉 + 3 hl 水 ≈ 20% 头道麦汁，水量与目标浓度成反比；粉的体积按约 0.7 hl/100 kg 计。头道麦汁一般比成品原麦汁高 4–6%，淡色啤酒常用 3–4 hl/100 kg。'},
+hops:{t:'酒花添加量',src:'p.320–321',f:[['BU','目标苦味',30,'BU',1],['Vh','热定型麦汁',200,'hl',1],['Y','苦味收率（按成品）',30,'%',1],['S','产品 A 承担的比例',70,'%',5],['aA','产品 A 的 α-酸',12,'%',.1],['aB','产品 B 的 α-酸',5,'%',.1]],
+ c:v=>{if(!(v.Y>0&&v.aA>0&&v.aB>0))return{err:'收率和 α-酸含量都要大于 0。'};const vc=v.Vh*.96,bg=v.BU*vc/10,ak=bg/1000/(v.Y/100),A=ak*v.S/100,B=ak-A;return{o:[['冷定型麦汁',fmt(vc,1),'hl'],['进入啤酒的苦味物',fmt(bg,0),'g'],['需加入的 α-酸',fmt(ak,2),'kg',1],['产品 A',fmt(A/(v.aA/100),1),'kg'],['产品 B',fmt(B/(v.aB/100),1),'kg']]}},
+ n:'BU = 每升啤酒中苦味物的毫克数；按冷麦汁体积（热体积 × 0.96）计算。苦味收率一般 25–35%，要在自己的厂里试验确定：需加入的 α-酸克数大约是目标 BU 值的 1/3（每 hl）。苦型酒花先加，香型酒花后加。'},
+yield:{t:'糖化间收率与发酵间收率',src:'p.323–331、398–399',f:[['G','投料',4000,'kg',50],['Vh','热定型麦汁',262,'hl',1],['P','定型麦汁浓度',11.6,'°P',.1],['Vp','接种麦汁（冷）',254,'hl',1],['Pp','接种麦汁浓度',11.4,'°P',.1]],
+ c:v=>{if(!(v.G>0))return{err:'投料要大于 0。'};const k=v.P*sg2020(v.P)*.998203,yf=k*.96,E=yf*v.Vh,kp=v.Pp*sg2020(v.Pp)*.998203,Ef=kp*v.Vp;return{o:[['浸出物（20 °C）',fmt(k,2),'kg/hl'],['收率因子',fmt(yf,2),''],['糖化间浸出物',fmt(E,0),'kg'],['糖化间收率',fmt(E/v.G*100,2),'%',1],['发酵间收率',fmt(Ef/v.G*100,2),'%'],['定型→接种损失',fmt(E-Ef,0),'kg 浸出物']]}},
+ n:'收率 = 浸出物(kg/hl) × 0.96 × 热定型量 ÷ 投料。kg/hl 由 °P 乘以 20/4 °C 比重得到，即书中 Plato 表的“g/100 mL”一栏；0.96 是热麦汁冷到 20 °C 的收缩系数。接种麦汁是冷的，不再乘 0.96。正常糖化间收率 74–79%。'},
+atten:{t:'表观与真实发酵度',src:'p.403–406',f:[['OE','原麦汁（接种麦汁）',12,'°P',.1],['Es','当前表观浸出物',3.8,'°P',.1],['El','发酵度极限对应的浸出物',2.1,'°P',.1]],
+ c:v=>{if(!(v.OE>v.Es&&v.Es>=v.El&&v.El>=0))return{err:'应满足 原麦汁 > 当前浸出物 ≥ 极限浸出物 ≥ 0。'};const vs=(v.OE-v.Es)/v.OE*100,vl=(v.OE-v.El)/v.OE*100;return{o:[['表观发酵度 Vs',fmt(vs,1),'%',1],['真实发酵度 ≈',fmt(vs*.81,1),'%'],['发酵度极限',fmt(vl,1),'%'],['与极限相差',fmt(vl-vs,1),'个百分点'],['残余可发酵浸出物',fmt(v.Es-v.El,1),'°P']]}},
+ n:'转罐时一般希望与极限相差约 10 个百分点（约 1% 浸出物），留给贮酒罐里的后发酵产生 CO₂；灌装前的最终发酵度则应尽量接近极限，否则等于给微生物留了糖。真实发酵度 ≈ 0.81 × 表观发酵度（Balling 经验系数）。'},
+blend:{t:'调配（混合十字）',src:'p.408–409',f:[['V1','啤酒（麦汁）A 的量',500,'hl',1],['E1','A 的浸出物',12.4,'%',.1],['E2','B 的浸出物（水填 0）',0,'%',.1],['Et','目标浸出物',11.6,'%',.1]],
+ c:v=>{const lo=Math.min(v.E1,v.E2),hi=Math.max(v.E1,v.E2);if(!(v.Et>lo&&v.Et<hi))return{err:'目标值必须落在 A 与 B 两者之间。'};const b=v.V1*(v.E1-v.Et)/(v.Et-v.E2);return{o:[['需加入 B',fmt(b,1),'hl',1],['调配后总量',fmt(v.V1+b,1),'hl'],['A : B',`${fmt(Math.abs(v.Et-v.E2),1)} : ${fmt(Math.abs(v.E1-v.Et),1)}`,'']]}},
+ n:'混合十字：把两种液体的浸出物写在左侧、目标写在中间，交叉相减得到两者的份数；混合方程 V1·E1 + V2·E2 =（V1+V2）·Et 给出同样结果。按百分数计算是近似，严格计算应换成 20/4 °C 密度；而且两种液体很难真正混匀。'},
+co2:{t:'CO₂ 溶解量',src:'p.409–410',f:[['T','啤酒温度',1,'°C',.5],['P','罐压（表压）',.5,'bar',.05],['C','目标 CO₂ 含量',.5,'%',.01]],
+ c:v=>{if(v.T<-2||v.T>20)return{err:'温度请在 −2 至 20 °C 之间。'};const s=co2sol(v.T),c=s*(v.P+1),need=v.C/s-1;return{o:[['饱和 CO₂ 含量',fmt(c,3),'%',1],['约合',fmt(c*10.1,1),'g/L'],['该温度常压溶解度',fmt(s,3),'%'],['达到目标所需表压',fmt(Math.max(0,need),2),'bar']],w:c<.32?'低于 0.32%：啤酒会显得平淡。':c<.5?'低于 0.50%：灌装途中还会损失一些，贮酒时宜再高一点。':''}},
+ n:'亨利定律：溶解量 ≈ 该温度下常压溶解度 × 绝对压力（按书中做法，常压取 1 bar）。常压溶解度取书中 12 °P、发酵度 80% 啤酒的数值并线性插值，0 °C 以下为外推。灌装的啤酒应含约 0.5% CO₂。'},
+pitch:{t:'接种量',src:'p.400、438',f:[['C','目标细胞浓度',25,'×10⁶/mL',1],['S','酵母泥浓度',3,'×10⁹/mL',.1],['V','麦汁量',500,'hl',10]],
+ c:v=>{if(!(v.S>0))return{err:'酵母泥浓度要大于 0。'};const l=100*v.C/v.S/1000;return{o:[['每 hl 酵母泥',fmt(l,2),'L',1],['总共需要',fmt(l*v.V,0),'L']]}},
+ n:'常用接种量 20–30×10⁶ 个/mL，约相当于每 hl 0.6–1 L 浓酵母泥（泥约 3×10⁹ 个/mL）。提高接种量是加快发酵而不带来负面后果的最重要手段，也能减少高级醇。'},
+ccv:{t:'锥形罐容积与顶空',src:'p.417–419、426',f:[['D','罐直径',4.5,'m',.05],['A','锥角',70,'°',1],['H','总液高（含锥部）',12,'m',.1],['K','顶空比例',25,'%',1]],
+ c:v=>{if(!(v.A>10&&v.A<170))return{err:'锥角请在 10°–170° 之间。'};const r=v.D/2,hc=r/Math.tan(v.A/2*Math.PI/180);if(!(v.H>hc))return{err:`总液高要大于锥高（${fmt(hc,2)} m）。`};const a=Math.PI*r*r,Vt=a*hc/3+a*(v.H-hc),hh=Vt*v.K/100/a;return{o:[['锥高',fmt(hc,2),'m'],['麦汁容量',fmt(Vt*10,0),'hl',1],['顶空高度',fmt(hh,2),'m'],['筒体+锥部总高（不含封头）',fmt(v.H+hh,2),'m'],['直径 : 总液高',`1 : ${fmt(v.H/v.D,1)}`,''],['CIP 清洗液（约）',fmt(Math.PI*v.D*30*100/3600,1),'L/s']]}},
+ n:'锥部 V = πr²h/3，筒体 V = πr²h；锥角 60° 时锥高 ≈ 0.866 × 直径。发酵罐顶空一般取接种麦汁体积的 18–25%（小麦啤酒约 40%）；液高最好不超过约 20 m，直径与总液高约 1 : 2。CIP 按每米罐周长约 30 hl/h 估算。'},
+cool:{t:'发酵与冷贮冷量',src:'p.395、429',f:[['OE','原麦汁',12,'°P',.1],['Vs','最终表观发酵度',80,'%',1],['dT','发酵后降温幅度',10,'K',.5],['V','批量',1000,'hl',10]],
+ c:v=>{const fh=v.OE*.81*v.Vs/100*587,lh=420*v.dT,t=fh+lh;return{o:[['发酵热',fmt(fh,0),'kJ/hl'],['降温液体热',fmt(lh,0),'kJ/hl'],['合计（未含散热）',fmt(t,0),'kJ/hl',1],['整批',fmt(t*v.V/1000,0),'MJ']]}},
+ n:'发酵热按每 kg 已发酵浸出物 587 kJ；已发酵浸出物 ≈ 原麦汁 × 0.81 × 表观发酵度。全麦啤酒发酵热约 4,300–4,600 kJ/hl，从 9 °C 冷到 −1 °C 约 4,200 kJ/hl，加上散热损失总计约 8,600–9,000 kJ/hl；最大冷量出现在发酵后 24–48 h 的降温。'},
+pu:{t:'巴氏杀菌单位 PU',src:'p.489–490',f:[['T','杀菌温度',70,'°C',.5],['t','保持时间',50,'s',1],['G','目标',15,'PU',1]],
+ c:v=>{const k=Math.pow(1.393,v.T-60),pu=v.t/60*k,need=v.G/k*60;const row=[62,64,66,68,70,72].map(x=>`${x} °C ${fmt(v.G/Math.pow(1.393,x-60)*60,0)} s`).join(' · ');return{o:[['得到',fmt(pu,1),'PU',1],['达到目标需保持',fmt(need,0),'s'],['温度倍率',fmt(k,2),'× /min']],i:'达到 '+v.G+' PU 所需时间：'+row}},
+ n:'1 PU = 60 °C 保持 1 min；PU = 时间(min) × 1.393^(T−60)。啤酒一般 14–15 PU，污染重时 22–27 PU；罐装啤酒 18–20 PU，温度不超过约 62 °C。PU 衡量杀菌效果，不衡量风味损伤——后者更取决于保持时间和含氧量。'},
+hg:{t:'高浓酿造节能',src:'p.510',f:[['V1','常规定型量',300,'hl',1],['P1','常规浓度',11,'%',.1],['P2','高浓浓度',15,'%',.1]],
+ c:v=>{if(!(v.P2>v.P1))return{err:'高浓浓度要高于常规浓度。'};const v2=v.V1*v.P1/v.P2,d=v.V1-v2;return{o:[['高浓定型量',fmt(v2,1),'hl'],['少加热煮沸',fmt(d,1),'hl',1],['节省比例',fmt(d/v.V1*100,1),'%'],['后续稀释水',fmt(d,1),'hl']],w:v.P2>15?'超过约 14.5–15% 时，副产物会在稀释后的成品中被察觉。':''}},
+ n:'按书中的简化算法（体积 × 百分浓度）。高浓的主要好处是稀释水不必加热和煮沸；代价是发酵更慢、酯和高级醇更多，泡沫也随稀释程度变差。'},
+loss:{t:'啤酒损耗与麦芽单耗',src:'p.709–712',f:[['Vc','定型麦汁量',11700,'hl',10],['Vs','可售啤酒量',10500,'hl',10],['G','投料量',180000,'kg',100]],
+ c:v=>{if(!(v.Vc>0&&v.Vs>0))return{err:'体积要大于 0。'};return{o:[['啤酒损耗',fmt((v.Vc-v.Vs)/v.Vc*100,2),'%',1],['损失体积',fmt(v.Vc-v.Vs,0),'hl'],['麦芽单耗',fmt(v.G/v.Vs,2),'kg/hl']]}},
+ n:'损耗 = 定型麦汁与可售啤酒之差占定型麦汁的百分比，平均 8–10%（其中约 4% 是冷缩）。麦芽单耗参考：6% 啤酒约 9 kg/hl，11% 约 17 kg/hl，16% 约 26 kg/hl。收率与损耗的百分数不能相加。'},
+cap:{t:'糖化间年产能',src:'p.333–334',f:[['W','每批定型麦汁',640,'hl',10],['B','每天批次',8,'批',1],['D','每周酿造天数',5,'天',.5],['K','每年生产周',52,'周',1],['Hd','节假日',10,'天',1],['L','损耗',9,'%',.5]],
+ c:v=>{const d=v.W*v.B,y=d*v.D*v.K-v.Hd*d;return{o:[['每天定型麦汁',fmt(d,0),'hl'],['每年定型麦汁',fmt(y,0),'hl'],['每年可售啤酒',fmt(y*(1-v.L/100),0),'hl',1]]}},
+ n:'书中经验：1 hl 啤酒约耗 17 kg 麦芽；1 t 投料约定型 64.6 hl 麦汁；每天 8 批、每周 5 天时，每 1 t 投料能力大约对应每年 10 万 hl 啤酒。这是理论上限，维修停产会明显降低。'}
+};
+function buildTool(el,key){
+  const T=TOOLS[key],id='t-'+key;el.id=id;el.className='tool';el.dataset.name=T.t;
+  el.innerHTML=`<div class="tool-h"><span class="tag">计算</span><span>${esc(T.t)}</span><span class="src">Kunze ${esc(T.src)}</span></div><div class="tool-g">${T.f.map(([k,l,v,u,st])=>`<label for="${id}-${k}"><span>${esc(l)}</span><span class="in"><input id="${id}-${k}" type="number" inputmode="decimal" value="${v}" step="${st}">${u?`<em>${esc(u)}</em>`:''}</span></label>`).join('')}</div><div class="tool-o" aria-live="polite"></div><p class="tool-err" hidden></p><p class="tool-n tool-i" hidden></p><p class="tool-n">${esc(T.n)}</p>`;
+  const out=el.querySelector('.tool-o'),er=el.querySelector('.tool-err'),inf=el.querySelector('.tool-i');
+  function run(){
+    const v={};for(const [k] of T.f){const x=parseFloat(el.querySelector(`#${id}-${k}`).value);v[k]=x}
+    if(Object.values(v).some(x=>!Number.isFinite(x))){out.hidden=true;er.hidden=false;er.textContent='请把每一项都填成数字。';return}
+    const r=T.c(v);
+    if(r.err){out.hidden=true;inf.hidden=true;er.hidden=false;er.textContent=r.err;return}
+    out.hidden=false;
+    out.innerHTML=r.o.map(([l,val,u,mn])=>`<div class="out${mn?' main':''}"><span>${esc(l)}</span><b>${esc(val)}</b>${u?`<small>${esc(u)}</small>`:''}</div>`).join('');
+    if(r.w){er.hidden=false;er.textContent=r.w}else er.hidden=true;
+    if(r.i){inf.hidden=false;inf.textContent=r.i}else inf.hidden=true;
+  }
+  el.addEventListener('input',run);run();
+}
+
+/* ---------- 内容：第 1 阶段 原料 ---------- */
+const STAGES=[];
+STAGES.push({id:'st1',n:1,name:'原料',en:'Raw materials',pages:'32–95',
+ sum:'啤酒的四样基本原料是大麦（先制成麦芽）、酒花、水和酵母；在纯酒令之外，未发芽谷物和糖可以替代一部分麦芽。原料的每项指标，都会在后面某个工序里变成效率或风味问题。',
+ inp:'收获的大麦与酒花、水源、纯种酵母',out:'符合规格的酿造原料',
+ chips:['大麦蛋白 ≤11.5%','发芽力 ≥95%','酒花 α 2.5–18%'],
+ steps:[
+ {id:'s1-1',no:'1.1',t:'大麦',en:'Barley',p:'32–49',
+  goal:'选出能整齐发芽、浸出物高的酿造大麦。大麦脱粒后谷皮仍附着在粒上，日后在过滤槽里就是天然滤层。',
+  params:[['品种类型','以二棱春大麦为主：粒大饱满、皮薄、浸出物高，多酚和苦味物少'],['水分','收获时 12–20%；长期贮存须低于 15%'],['淀粉','占干物质 50–65%；直链 20–25%，支链 75–80%'],['蛋白质','一般 8–11%，商业上限 11.5%（干基）；每高 1%，浸出物约少 0.7–1.0%'],['β-葡聚糖','占大麦 4–7%；分解不足会让麦汁黏稠、过滤困难'],['分级（>2.5 mm）','一般 ≥85%，优良 ≥90%，顶级 ≥95%；顶级大麦 <2.2 mm 的筛下物 <2%'],['千粒重','干基 38–40 g（范围 30–45 g）'],['发芽力（5 天）','一般 ≥95%，优良 ≥98%；3 天值应接近 5 天值'],['水敏感性','≤10% 不敏感，>45% 很敏感（要缩短水浸）']],
+  pts:['籽粒分工明确：胚分泌赤霉酸发出信号，糊粉层负责产酶，胚乳是淀粉仓库。淀粉被蛋白基质和由蛋白、β-葡聚糖、戊聚糖构成的细胞壁包着，制麦就是先拆开这些包装。','大淀粉粒（A 型，20–30 µm）和小淀粉粒（B 型，3–5 µm）：小颗粒在数量上占 70–95%，重量却只占 3–10%。','约 1/3 的大麦蛋白进入成品。高分子降解产物决定泡沫和浑浊，低分子产物（氨基酸）是酵母营养；泡沫的关键蛋白是 Protein Z（40 kDa）和 LTP1（10 kDa）。','脂肪约 2%，集中在糊粉层和胚。其中的不饱和脂肪酸经脂氧合酶或自氧化，会成为日后老化味的前体。','红色或粉红色籽粒提示镰刀菌感染，意味着霉菌毒素和喷涌（开瓶涌沫）风险。'],
+  q:[['为什么蛋白质含量有上限？','蛋白越高浸出物越低（每 +1% 约少 0.7–1%），高分子蛋白越多浑浊风险越大，胚乳也越难溶解均匀。'],['发芽力和水敏感性分别说明什么？','发芽力说明胚是否活着、能不能长；水敏感性说明水分稍多时它会不会“拒绝”发芽。敏感的大麦要少泡水、多给空气。']]},
+ {id:'s1-2',no:'1.2',t:'酒花',en:'Hops',p:'49–67',
+  goal:'提供苦味（异 α-酸）、香气（酒花油）和一部分多酚；选哪种产品形式，决定了用量和苦味收率。',
+  params:[['利用部位','雌花序（球果）；有用成分几乎都在黄色的蛇麻腺里'],['干物质组成','苦味物约 18.5%，酒花油约 0.5%（0.5–1.2%），多酚约 3.5%，蛋白约 20%'],['品种类别','香型 α 2.5–5%（合葎草酮 <20%）；苦型；高 α 型 >10%（最高约 18%）'],['合葎草酮','苦味较粗，目标低于 α-酸的 20–25%'],['采后干燥','刚采含水 75–80%，≤50 °C 烘到 8–12%'],['贮存损失','18 °C 下两个月 α-酸约损失 25%，须冷、干、隔氧'],['苦味利用率','球果和颗粒按成品计约 25–35%；异构化浸膏可达约 95%'],['用量参考','全球平均约 5.1 g α-酸/hl 啤酒']],
+  pts:['α-酸本身几乎不溶，煮沸时异构化为易溶且很苦的异 α-酸；β-酸的苦度只有 α-酸的约 1/9。苦味物表面活性强，也有利于泡沫，还有一定抑菌作用（不能代替卫生）。','酒花油有 200 多种组分，月桂烯最多但气味粗糙；葎草烯、法尼烯和含氧组分决定香型品质。油在煮沸中很快挥发，所以香型酒花后加。','酒花老化时 α、β-酸变成没有酿造价值的硬树脂，并裂解出异戊酸（奶酪味）。','产品：90 型颗粒（100 kg 球果约得 90 kg）；45 型富集颗粒（−35 °C 粉碎后筛去部分苞片和穗轴）；CO₂ 或乙醇浸膏；异构化颗粒、异构化浸膏、四氢/六氢异 α 浸膏（后两者不产生日光臭、改善泡沫；这些在纯酒令下都不允许）。','感官评价按纯度、干燥度、颜色光泽、球果形态、蛇麻腺和香气打分，其中蛇麻腺和香气各占最高 30 分。'],
+  q:[['同样 1 kg α-酸，为什么异构化浸膏得到的苦味远多于颗粒？','它已经预先异构化并且可溶，不受煮沸中异构化不完全的限制，也少被凝固物和酵母带走，利用率可到约 95%；颗粒按成品只有约 25–35%。'],['香型酒花为什么常在煮沸末甚至回旋槽里加？','酒花油在沸腾中很快挥发，后加才能把香气留下；代价是这部分 α-酸几乎不异构化。']]},
+ {id:'s1-3',no:'1.3',t:'水',en:'Water',p:'67–83',
+  goal:'酿造水决定醪和麦汁的 pH，进而决定酶的效率和风味；全厂用水还要满足清洗和冷却，并且越省越好。',
+  params:[['全厂新鲜水','平均 5–8 hl/hl 销售啤酒；做得好的厂 <3.5 hl/hl'],['硬度单位','1 °dH = 10 mg CaO/L = 0.357 mval/L = 0.18 mmol/L'],['残碱度 RA','RA = 碳酸盐硬度 −（钙硬度 + 0.5 × 镁硬度）÷ 3.5（均以 °dH 计）'],['RA 目标','比尔森类不超过约 2 °dH；为胶体稳定性宜 <5 °dH'],['饮用水限值举例','硝酸盐 50、亚硝酸盐 0.5、硫酸根 500 mg/L；100 mL 中不得检出大肠杆菌'],['消毒剂残留','二氧化氯 ≤0.4 mg/L，活性氯 ≤1.2 mg/L'],['压力砂滤','石英砂 0.8–1.2 mm，层高约 2 m，10–20 m³/(m²·h)；不能除菌'],['反渗透','8–12 bar，脱盐率 95–98%']],
+  pts:['碳酸氢根（暂时硬度）把醪的 pH 往上推；钙、镁的非碳酸盐硬度与麦芽磷酸盐反应生成沉淀，把 pH 往下拉。两者相抵之后剩下的就是残碱度。','多数酶促过程在较低 pH 下更快更好，所以水处理的核心是降低残碱度：石灰水脱碳酸（最常用）、离子交换（阳离子树脂出水再与石灰水混合）、反渗透、加石膏或氯化钙，或者干脆用生物酸化。','硝酸盐在酵母中被还原成亚硝酸盐，是酵母毒物，20 mg/L 就可能影响发酵。','脱氧水用于顶水、硅藻土预涂和高浓稀释：CO₂ 汽提、真空、热脱气、加氢催化或中空纤维膜都能做到。'],
+  faults:[['醪 pH 偏高（5.7–5.9）','残碱度高，碳酸盐多','脱碳酸；或用生物酸化把醪 pH 调到 5.2–5.4']],
+  q:[['残碱度公式里为什么镁只算一半？','镁与磷酸盐反应、降低 pH 的作用只有钙的约一半，所以镁硬度按 0.5 计。'],['为什么含硫酸盐的水和很软的水都能提高糖化间收率，碳酸盐多的水却降低收率？','前两者让醪的 pH 更低，酶作用更充分；碳酸盐把 pH 推高，酶活受抑。']]},
+ {id:'s1-4',no:'1.4',t:'酵母',en:'Yeast',p:'83–90',
+  goal:'酒精发酵的执行者。它的状态决定发酵速度、副产物谱和最终风味。',
+  params:[['细胞大小','长 8–10 µm，宽 5–7 µm，含水约 75%'],['干物质','蛋白 45–60%，碳水化合物 25–35%，脂肪 4–7%，矿物质 6–9%'],['能量收益','呼吸约 36–38 ATP/葡萄糖；发酵只有 2 ATP'],['生长温度','0–40 °C 都能生长，最适 25–30 °C'],['发酵温度','下面酵母 4–12 °C；上面酵母 14–25 °C'],['细胞年龄','芽痕数到 4–6 个即可看出偏老']],
+  pts:['合成细胞膜要用不饱和脂肪酸和甾醇，而合成它们需要氧。缺氧时增殖提前停止——这就是冷麦汁必须充氧的原因。','生长分六个阶段：延滞、加速、对数、减速、稳定、衰亡。从旺盛主发酵（对数期）中取出直接接种的酵母起酵最快。','上面酵母与下面酵母：下面酵母能完全发酵棉子糖，上面酵母只能发酵约 1/3；上面酵母出芽后常连成链并浮到液面；下面酵母沉底，又分粉状（沉得慢、发酵度高）和凝聚型（很快成絮、澄清好）。絮凝性由遗传决定。','所有非本厂培养的酵母（包括其他酿酒酵母菌株）都算野生酵母，会带来异味和浑浊。'],
+  q:[['为什么旺盛期取出的酵母比冷藏几天的起酵快？','它还处于对数生长状态，酶系和储备物都活跃，不需要重新度过漫长的延滞期。']]},
+ {id:'s1-5',no:'1.5',t:'辅料',en:'Adjuncts',p:'90–96',
+  goal:'在纯酒令之外，用未发芽谷物或糖替代一部分麦芽，以降低成本或调整口味。',
+  params:[['常用比例','未发芽谷物不超过 15–20%，再多就得加酶'],['大米','淀粉 85–90%，糊化 70–85 °C（热年份 80–85 °C）'],['玉米','去胚后油 ≤1–1.5%；糊化 60–70 °C；浸出物 88–90%（干基）'],['未发芽大麦','约 125 kg 大麦（或 120 kg 脱壳大麦）替代 100 kg 麦芽'],['糖','78 kg 蔗糖 ≈ 100 kg 麦芽的浸出物；定型前约 10 min 加入煮沸锅'],['着色糖','啤酒只用氨法焦糖（第 3 类），6,000–40,000 EBC']],
+  pts:['辅料几乎不带来可溶氮和锌，整批麦汁的 FAN 被稀释 → 必须保证麦芽部分的蛋白分解，否则发酵出问题。','玉米胚含油、损泡，所以用去胚玉米粒，或已压片糊化的玉米片（可直接投入糖化锅）。','米淀粉膨胀比麦芽淀粉大得多，醪太稠会糊锅甚至卡住搅拌器 → 先与 10–20% 麦芽醪一起液化再煮沸（见 3.3）。','未发芽大麦的 β-葡聚糖没有经过制麦分解，是过滤问题的来源，需要 45–50 °C 的葡聚糖酶休止。'],
+  q:[['加了糖或糖浆，为什么常要做更长的蛋白休止？','糖只提供可发酵浸出物，不提供氨基酸和锌；整批麦汁的 FAN 被稀释，只能让麦芽部分多分解一些蛋白来补足。']]}
+ ]});
+
+/* ---------- 第 2 阶段 制麦 ---------- */
+STAGES.push({id:'st2',n:2,name:'制麦',en:'Malt production',pages:'97–194',
+ sum:'让大麦在受控条件下发芽，产生酶并“溶解”胚乳，再用热终止生命活动、定型色香、赶走 DMS。细胞溶解只有麦芽厂能做好，酒厂事后只能部分弥补。',
+ inp:'清选后的酿造大麦（水分 12–14%）',out:'麦芽（水分 <5%）；100 kg 大麦约得 80 kg',
+ chips:['浸麦度 42–48%','发芽 5 d ≤18 °C','焙焦 80–85 °C'],
+ steps:[
+ {id:'s2-1',no:'2.1',t:'接收、清选与分级',en:'Intake, cleaning, grading',p:'98–120',
+  goal:'只让干净、同品种、粒度均匀的大麦进入浸麦；同时把火花和粉尘爆炸的风险降到最低。',
+  params:[['清选顺序','预清（振动筛 + 吸风）→ 磁选 → 去石 → 精选（窝眼滚筒，大麦用 6.5 mm 窝眼）→ 分级 → 计量'],['分级筛','留在 2.5 mm 上为 I 级；2.2–2.5 mm 为 II 级；<2.2 mm 作饲料'],['气力输送','悬浮需 ≥11 m/s，输送约 20 m/s'],['斗式提升','大麦 ≤4 m/s，麦芽 ≤2.5 m/s']],
+  pts:['大小粒吸水速度不同，分级是为了浸麦均匀；如今很多厂把 >2.2 mm 的大麦一起制麦，更看重品种纯度。','铁件和石子会损伤设备并打出火花，而粮食粉尘在一定浓度下能爆炸 → 磁选、去石、除尘（旋风预分离 + 布袋或脉冲滤筒）缺一不可。'],
+  q:[['为什么粉碎机和提升机之前都要磁选？','铁件撞击会产生火花，可能点燃粉尘；它还会打坏辊子的齿纹。']]},
+ {id:'s2-2',no:'2.2',t:'干燥与贮存',en:'Drying and storage',p:'120–126',
+  goal:'让大麦安全度过休眠期，保住发芽力，把呼吸损失和霉变降到最低。',
+  params:[['休眠期','收获后约 6–8 周才达到“制麦成熟度”'],['安全贮存','水分 12–15% 且 9–12 °C 可长期保存；16.6–18% 须降到 5–7 °C，只能存 4–6 个月'],['呼吸强度（20 °C）','水分 14–15% 约 1.4 mg CO₂/(kg·天)，17% 约 100，20.5% 约 359'],['平仓堆高','水分 ≤15.5% 可堆 3 m；>17% 只能堆 1 m'],['贮存损失','筒仓约 0.5%（3 个月内）到 2%（6 个月以上）']],
+  pts:['呼吸消耗淀粉，就是浸出物损失；水分和温度同时升高时呼吸会连锁放大，进而发热霉变。','冷却（向仓底送冷风）能推迟干燥，并抑制米象（12–15 °C 以下活动很弱）。','田间镰刀菌产生 DON、ZEA 等霉菌毒素，也与喷涌有关。'],
+  q:[['为什么湿大麦必须先干燥再入仓？','水分超过约 15% 时呼吸急剧增强，发热、耗淀粉、滋生霉菌，最后还会丧失发芽力。']]},
+ {id:'s2-3',no:'2.3',t:'浸麦',en:'Steeping',p:'126–135',
+  goal:'给籽粒补水、供氧、清洗，让胚苏醒并开始产酶。',
+  params:[['浸麦度（目标水分）','淡色 42–44%（分步提水可到 48%）；深色 44–47%'],['吸水到 42% 所需时间','5 °C 约 100 h，10 °C 约 75 h，15 °C 约 50 h'],['典型节奏','湿浸 4 h → 空气休止约 20 h（每小时抽 CO₂ 10–15 min）→ 第二次湿浸 → 出槽后在发芽箱喷水补足'],['空气休止占比','约 80% 的浸麦时间'],['用水','4–7 m³/t（回用可到约 3.5）；仅把水分从 12% 提到 45% 就要 0.94 m³/t'],['体积膨胀','约 40–45%']],
+  pts:['吸水后呼吸大增。泡在水里缺氧会转入分子内呼吸、生成醇和醛，严重时胚被“浸死”。CO₂ 比空气重，要从槽底抽走。','小粒吸水快，所以分级后分别浸麦更均匀；对水敏感的大麦，先在 37–40% 水分等它破口，再逐步加水。','第一遍浸麦水很脏（单宁、苦味物、硅酸、谷皮蛋白），必须换掉。','浸麦槽里一般只到 36–38%，其余水分在发芽设备中喷水完成——浸麦和发芽其实是连续的。'],
+  faults:[['发芽不齐','分级不严；锥底积聚 CO₂；通风不足','底部抽 CO₂、用压缩空气翻动；平底槽均匀装料']],
+  q:[['为什么现代浸麦把大部分时间都安排成空气休止？','胚在吸水后需要大量氧来呼吸和产酶；长时间泡水缺氧，发芽慢且不均，甚至死胚。']]},
+ {id:'s2-4',no:'2.4',t:'发芽',en:'Germination',p:'135–158',
+  goal:'让酶大量形成，把胚乳细胞壁和蛋白基质分解开（溶解），同时把呼吸和根芽造成的损失压到最低。',
+  params:[['发芽时间','现多为 5 天（5–6 天）'],['最高温度','比尔森麦芽 17–18 °C；深色麦芽 22–25 °C'],['绿麦芽水分','约 45%（不低于 40%）'],['料层','装料 1.2–1.3 m，发芽后长到 1.8–1.9 m'],['通风','300–700 m³/(t·h)，进风比料层低约 2 °C，并保持饱和湿度'],['叶芽长度','淡色 2/3–3/4 粒长；深色 3/4–1；超过粒长称“骠骑兵”'],['根芽','淡色约 1.5 倍粒长，深色约 2 倍'],['第 3 天起','先减半新风，之后掺入 80% 以上富 CO₂ 的循环风限制呼吸']],
+  pts:['胚分泌赤霉酸 → 糊粉层新合成 α-淀粉酶（大麦中原本没有）、界限糊精酶、葡聚糖酶和蛋白酶；β-淀粉酶原本就在胚乳里，只是被释放出来。多数酶在第 3–4 天形成。','溶解顺序固定：先分解细胞壁中层的蛋白，再是戊聚糖，最后才轮到 β-葡聚糖骨架；溶解从盾片向粒尖推进。粒尖没溶解，就会把淀粉和 β-葡聚糖问题带进糖化间。','蛋白溶解（库尔巴哈指数）与细胞溶解同步进行。太高会让焙焦时美拉德反应过强，TBI 和色度上升、风味稳定性下降。','冷发芽总能得到最高的淀粉酶量；发芽越暖越久，根越长、损失越大。','发芽中形成 DMS 前体（SMM）：浸麦度越高、发芽温度越高、时间越长，前体越多。'],
+  faults:[['溶解过度','浸麦度高、温度高、时间长','限制绿麦芽水分、降温，第 3 天起减氧'],['溶解不足或不均','起发不齐、水分不够','保证均匀起发和足够水分；检查品种纯度']],
+  q:[['为什么说“细胞溶解只能交给麦芽厂”？','分解 β-葡聚糖的内切葡聚糖酶很怕热，糖化中很快失活；而耐热的 β-葡聚糖溶解酶会把未溶解部位的大分子 β-葡聚糖释放出来却不分解它，酒厂没法根本补救。'],['叶芽长度为什么能用来判断溶解？','叶芽在谷皮下沿背部向粒尖生长，长度大致与溶解进度同步；超过粒长说明温度太高或发芽过度。']]},
+ {id:'s2-5',no:'2.5',t:'焙焦',en:'Kilning',p:'158–172',
+  goal:'把水分从 40% 以上降到 5% 以下、终止生命活动，尽量保留酶，按啤酒类型生成或避免色香物质，并把 DMS 前体赶走。',
+  params:[['两段','凋萎（预干）+ 焙焦；水分降到 10–12% 之前，料温不超过约 50 °C'],['淡色（比尔森）','80–85 °C 保持 3–5 h；宁取 85 °C 2–3 h，不取 80 °C 5 h'],['深色（慕尼黑）','100–105 °C'],['风量','约 4,300–5,000 m³/(t·h)，穿透点后可降到约一半'],['淡色麦芽的酶保留','α-淀粉酶比绿麦芽约高 15%；β-淀粉酶约低 40%；内切 β-葡聚糖酶损失 20–40%'],['风味稳定指标','麦芽 TBA <14；DMS 前体 <5–6 ppm；亚硝胺（NDMA）限值约 2.5 µg/kg'],['热耗（带热回收）','单层炉 250–300 MJ/t，双层炉 200–250 MJ/t；热回收可省 30–35%']],
+  pts:['湿热会破坏酶，湿淀粉在高温下糊化后冷却成玻璃质 → 必须先低温大风量除水，干了再升温。','美拉德反应与 Strecker 降解在 90 °C 以上、时间较长时明显：生成类黑精（颜色、香气、还原力），也生成日后老化味的前体。热负荷用 TBA（TBI）表示。','SMM → DMS 活性前体 → 游离 DMS：温度越高，转化并排出越多；但温度越高、时间越长，TBA 也越高。高温短时是两者的折中。','淡色麦芽前半段强风快速干燥，让酶来不及分解；深色麦芽关风门在湿热中“焖”，让酶生成大量糖和氨基酸，供焙焦时显色生香。','改用间接加热后，燃气中的 NOx 不再穿过麦芽，亚硝胺问题基本解决；烟熏麦芽则是有意让山毛榉烟穿过麦芽。'],
+  faults:[['玻璃质麦芽','水分还高时就升温','严格控制穿透点之前的料温'],['DMS 前体偏高','焙焦温度不足或保持太短','提高焙焦温度或延长保持时间']],
+  q:[['为什么比尔森麦芽宁要 85 °C 2–3 h，而不要 80 °C 5 h？','两种方式都能把 DMS 前体降到目标，但高温短时的累计热负荷（TBA）更低，对风味稳定性更有利。']]},
+ {id:'s2-6',no:'2.6',t:'焙焦后处理与制麦收率',en:'After kilning, malting yield',p:'172–174',
+  goal:'冷却、除根、贮存熟化和抛光，并核算制麦损失。',
+  params:[['出炉','约 80 °C，冷却到 35–40 °C 以下'],['麦根','约占麦芽 3–4%，蛋白约 30%，是优质饲料'],['贮存','至少 4 周：水分回升到 4–5%，加工性能改善'],['干物质损失','淡色 10.5%（浸麦 1.0 + 呼吸 5.8 + 麦根 3.7）；深色 13.0%'],['经验收率','100 kg 大麦约得 80 kg 淡色麦芽']],
+  pts:['新焙焦的麦芽直接用会造成过滤和发酵困难，所以要贮存熟化。','麦芽吸湿，库房要干燥凉爽；筒仓表面积小，吸湿风险低。','降低损失的办法：低温发芽，从第 3 天起多用富 CO₂ 循环风限制呼吸和根的生长。'],
+  w:['chart:malt'],
+  q:[['100 kg 大麦只出 80 kg 麦芽，20 kg 去哪了？','大约一半是水分差（大麦 12–14% 对麦芽 3–4%），另一半是干物质损失：呼吸消耗最多，其次是被除去的麦根，少量随浸麦水流失。']]},
+ {id:'s2-7',no:'2.7',t:'麦芽评价',en:'Malt evaluation',p:'174–179',
+  goal:'用一组指标判断这批麦芽能不能在酒厂里顺利糖化、过滤和发酵。',
+  params:[['水分','淡色 3.0–4.5%；合同上限 5%'],['浸出率（细粉，干基）','淡色约 80–82% 以上；深色 75–78%'],['粗细粉差','1.2–1.8%（<1.8% 为好）'],['库尔巴哈指数','38–42%（<35 溶解不足，>41 过度）'],['脆度','>85–87%；全玻璃质粒 <2%'],['协定麦汁黏度','<1.55–1.6 mPa·s（8.6% 浓度）'],['β-葡聚糖（65 °C 协定麦汁）','<350 mg/L'],['色度','淡色协定麦汁 ≤4 EBC；煮沸麦汁 ≤5–7 EBC'],['糖化力','淡色 240–260 WK'],['游离氨基氮','120–160 mg/100 g 干麦芽'],['DMS 前体 / TBA','≤5 mg/kg；TBA ≤14–15']],
+  pts:['协定糖化法是各项分析的共同基础：50 g 麦芽粉加 200 mL 水，45–46 °C 保持 30 min，以 1 °C/min 升到 70 °C，再加 100 mL 水保持 1 h，冷却补重后过滤测浸出物。','Carlberg 纵切染色法看均一性（≥70%，最好 75%），能发现混入的短芽麦芽。','近红外快速仪器能在 1 分钟内给出主要数据。'],
+  q:[['为什么同时需要“脆度”和“库尔巴哈指数”两个溶解指标？','脆度看细胞壁（物理上是否松脆，关系 β-葡聚糖和过滤）；库尔巴哈看蛋白溶解（可溶氮占总氮，关系泡沫、FAN 和色度）。两者可以不同步。']]},
+ {id:'s2-8',no:'2.8',t:'特种麦芽',en:'Special malts',p:'179–187',
+  goal:'用不同的发芽、焖热和焙焦或焙炒路线，得到颜色、香气和酒体各不相同的麦芽。',
+  table:{head:['麦芽','色度 EBC','工艺要点','常见用法'],rows:[
+   ['比尔森（淡色）','2.5–3.5','有限溶解；80–85 °C 焙焦','淡色啤酒的基础麦芽'],
+   ['维也纳','6–8','浸麦度 44–46%；90–95 °C 焙焦','可全部用于三月、节日啤酒'],
+   ['慕尼黑（深色）','15–25','高蛋白大麦、强化发芽、湿热凋萎；100–105 °C 焙焦 4–5 h','深色啤酒的基础；25–40% 用于增香'],
+   ['类黑精麦芽','50–80','发芽末期 40–50 °C 焖热；90–100 °C 以上焙焦','5–20%，带来红色调和酒体'],
+   ['浅焦香（Carahell 类）','20–40','焙炒滚筒里 70–80 °C 让籽粒内部糖化，再焙炒','提升酒体和泡沫'],
+   ['深焦香（Caramünch 类）','80–160','焙炒升到 180–210 °C','深色节日啤酒、琥珀色啤酒'],
+   ['糊精麦芽（Carapils 类）','3.5–5','只糖化，60–65 °C 低温烘干','至 15%；无醇啤酒可到 30%'],
+   ['酸麦芽','约 3.5','绿麦芽喷乳酸，含 2–4% 乳酸，pH 3.4–3.5','降低醪 pH；配硬水常用 6–9%'],
+   ['焙烤、巧克力麦芽','800–1,600','淡色麦芽润湿后 180–220 °C 焙烤，喷水“去苦”','0.5–2% 调色'],
+   ['小麦麦芽','3–4（深色 15–17）','无皮、吸水快、易结块要勤翻；限制蛋白分解','小麦啤酒 50–70%']]},
+  pts:['焦香麦芽的“糖化”发生在滚筒里的籽粒内部，生成的糖随即焦糖化，所以带来焦糖香和酒体；焙烤麦芽则是用干的淡色麦芽直接高温焙烤。','短芽麦芽损失小但溶解不足，只能配合很强的糖化程序；低温焙焦的糖化力麦芽保留了大量酶，可帮助分解辅料。','色素啤酒用约 40% 焙烤麦芽酿造，脱苦后真空浓缩到 1,000–17,000 EBC，能在任何工序调色，并且符合纯酒令。'],
+  q:[['焦香麦芽和焙烤麦芽的根本区别是什么？','焦香麦芽先在滚筒里让籽粒内部糖化，再把糖焦糖化；焙烤麦芽是干麦芽直接高温焙烤。前者给焦糖香和酒体，后者给颜色和焙烤味，用量很小。']]}
+ ]});
+
+/* ---------- 第 3 阶段 麦汁制备（上） ---------- */
+STAGES.push({id:'st3',n:3,name:'麦汁制备',en:'Wort production',pages:'195–366',
+ sum:'在糖化间把麦芽中不溶的淀粉和蛋白变成可溶浸出物，分离酒糟，煮沸加酒花，去除凝固物，再冷却充氧。这一阶段决定可发酵糖比例、苦味、DMS 和热负荷。',
+ inp:'麦芽（和辅料）、酿造水、酒花',out:'接种麦汁：如 11–12 °P，5–8 °C，溶氧 8–10 mg/L',
+ chips:['糖化 62–78 °C','煮沸 40–60 min','收率 74–79%'],
+ steps:[
+ {id:'s3-1',no:'3.1',t:'粉碎',en:'Milling',p:'196–214',
+  goal:'把胚乳粉碎得足够细，便于酶作用；同时尽量保护谷皮，让它在过滤槽里继续充当滤层。',
+  params:[['六辊典型辊距（过滤槽粗粉）','预碎辊 1.2–1.6 mm，皮辊 0.6–0.8 mm，粒辊约 0.4 mm；压滤机粉更细'],['辊','直径约 250 mm，长 0.8–1.0 m；600–900 条斜齿纹，两辊转速比约 1.25 : 1'],['调湿粉碎','粉碎前 1–2 min 用 30–35 °C 蒸汽或水；谷皮水分 +1.2–2.5%，籽粒内部仅 +0.3–0.5%'],['浸渍调湿','60–70 °C 水接触 50–60 s（要抑制脂氧合酶可用 80 °C）'],['粉的体积','未调湿 0.5–0.7 hl/100 kg；调湿 0.8–1.0 hl/100 kg'],['筛分检验','6 级筛：谷皮、粗粒、细粒 I、细粒 II、粉、细粉；锤磨粉的谷皮部分只有约 1%'],['粉尘','0.4–1.4 kg/100 kg 麦芽']],
+  pts:['矛盾在于：粉越细酶作用越充分，但过滤槽需要完整的谷皮做滤层。湿而有弹性的谷皮加上干而脆的胚乳是理想状态，这就是调湿粉碎。','溶解差的麦芽要磨得更细；溶解好的麦芽、强糖化法、过滤时间长时可以粗一些。','压滤机靠薄滤饼和聚丙烯滤布过滤，不依赖谷皮，可以用锤式粉碎机磨得很细，收率更高。','粉碎一开始脂氧合酶就被激活 → 粉仓和调湿段可以充惰性气体，投料尽快进行。','防爆：辊下防爆板、泄爆片、Q 管或抑爆系统，设备良好接地。'],
+  faults:[['过滤慢、酒糟压实','粉太细或谷皮破碎太多','放大辊距，采用调湿粉碎'],['酒糟可提取浸出物高','粉太粗、辊磨损、麦芽太湿','调整辊距、重磨辊子、放慢粉碎']],
+  q:[['调湿粉碎为什么能同时提高过滤速度和收率？','润湿的谷皮有弹性、不易碎，体积增加 10–20%，滤层更松；胚乳仍然干脆，可以磨细，酶作用面更大。']]},
+ {id:'s3-2',no:'3.2',t:'糖化',en:'Mashing',p:'214–247',
+  goal:'让麦芽中的酶在各自最适条件下，把淀粉分解成糖和糊精，分解 β-葡聚糖和蛋白，并按啤酒类型设定可发酵糖的比例。',
+  params:[['休止温度','45–50 °C 蛋白与 β-葡聚糖；62–65 °C 麦芽糖（β-淀粉酶）；72–75 °C 糖化（α-淀粉酶）；76–78 °C 终止'],['糊化温度','有淀粉酶存在时麦芽和大麦淀粉约 60 °C；大米 80–85 °C'],['可发酵糖（淡色全麦）','占浸出物 62–68%；其中麦芽糖约 65%、麦芽三糖约 17.5%、葡萄糖和果糖约 12%、蔗糖约 5%'],['料水比','淡色 3–4 hl/100 kg；深色 3–3.5 hl/100 kg；醪比成品原麦汁浓 5–6%'],['目标醪 pH','5.1–5.2（未处理时通常 5.6–5.9）'],['麦汁 FAN 与锌','FAN 约 200–230 mg/L（12%）；锌 ≥0.10–0.15 mg/L'],['搅拌','周速 ≤2 m/s（最高 3），为防剪切宜 <1 m/s'],['糖化时长','浸出法 1.5–2 h；煮出法最多约 3 h']],
+  pts:['淀粉分解三步不能颠倒：糊化（淀粉粒吸水膨胀破裂）→ 液化（α-淀粉酶迅速降低黏度）→ 糖化（α-淀粉酶切成 7–12 个葡萄糖的糊精，β-淀粉酶从链端切下麦芽糖）。两种淀粉酶都切不开 1,6 支点，所以总会留下界限糊精。','碘检：冷却的醪样滴 0.02 N 碘液不再变色即“碘正常”。若到定型麦汁仍显蓝色，只能补加头道麦汁或麦芽浸出物来补救。','62–63 °C 长休止 → 麦芽糖多、发酵度高；以 72–75 °C 为主 → 糊精多、发酵度低。醪较稠时酶受保护，发酵度略高；较稀时浸出更多。','β-葡聚糖：内切葡聚糖酶最适 45–50 °C（40–45 °C）而且怕热；耐热的溶解酶（约 62 °C）只释放不分解 → 溶解差的麦芽不适合高温投料。泵、急弯、剧烈搅拌产生的剪切力会让 β-葡聚糖交联成凝胶。','蛋白：45–50 °C 生成较多氨基酸（酵母营养），60–70 °C 生成较多高分子产物（泡沫）。溶解好的麦芽再做长时间 50 °C 休止，泡沫反而变差。','脂氧合酶在低温、较高 pH 的投料阶段最活跃 → 高投料温度（≥60 °C）、低 pH（5.1–5.2）、避免进氧都能保护风味稳定性。','生物酸化：培养麦芽自带的乳酸菌（如 L. amylovorus，48 °C），得到 0.8–2% 的乳酸液；每把 pH 降 0.1，醪中约需 60 mL/kg 麦芽的 0.8% 乳酸液（加在麦汁中约需一半）。纯酒令下这是唯一合规的降 pH 方法。','煮出法永远煮稠醪：稠醪里是尚未溶解的颗粒，需要煮沸破开淀粉；稀醪溶有大量酶，一煮就失去酶。回混时把煮沸醪泵入未煮醪，并尽量从底部进入以免吸氧。'],
+  w:['chart:enz','chart:mash','tool:water','tool:decoct'],
+  faults:[['碘反应不正常','糖化温度过高或时间不足；终止温度过高使 α-淀粉酶失活','延长 72 °C 休止；终止温度不超过约 78 °C'],['发酵度偏低','麦芽糖休止不足','延长 62–64 °C 休止'],['泡沫差、口感空','50 °C 休止太长，蛋白分解过度','缩短或取消低温蛋白休止，提高投料温度'],['过滤困难','β-葡聚糖高、剪切过大','检查麦芽溶解；降低搅拌和泵速，避免急弯']],
+  q:[['为什么终止温度一般不超过 78 °C？','过滤中还会溶出少量未分解的淀粉，需要仍然有活性的 α-淀粉酶完成后糖化；超过约 78–80 °C 它迅速失活，麦汁可能不再碘正常，形成淀粉浑浊。'],['高温投料（60–64 °C）的前提是什么？','麦芽必须溶解得非常好而且均匀（脆度 >85%、均一性 ≥70%、协定麦汁黏度 <1.6 mPa·s），否则 β-葡聚糖得不到分解，过滤出问题。'],['为什么煮出法比浸出法多耗 10–20% 的能量？','除了把全醪升温，还要把相当一部分稠醪单独加热到沸腾并保持一段时间。']]},
+ {id:'s3-3',no:'3.3',t:'辅料糖化与特殊糖化法',en:'Adjuncts, special mashing',p:'245–255',
+  goal:'处理糊化温度高、没有经过制麦的谷物；或者用特殊程序得到特定的发酵度或收率。',
+  params:[['大米','米粉加 10–20% 麦芽粉，每 100 kg 至少 5 hl 水；78 °C 液化 10–20 min，或 85–90 °C 糊化后兑入较冷的麦芽醪到 72–75 °C，再煮沸 30–40 min'],['玉米片','已压片糊化，可直接投入糖化锅'],['高粱','可用 100% 高粱麦芽；52 °C、pH 约 4.6 保证 FAN'],['酶制剂','耐热细菌 α-淀粉酶（80 °C 以上仍有效）、蛋白酶、葡聚糖酶（纯酒令不允许）'],['跳跃糖化','约 35 °C 稠醪中注入沸水，直接升到约 72 °C → 发酵度极限约 40%'],['麦芽糖酶休止','45 °C → 葡萄糖可达 35–40%，乙酸异戊酯等酯香增加 70–120%'],['加压糖化','2–3 bar 可多得 2–3% 收率，但额外浸出物质量差'],['糖化时长约束','每天 8 批须每 3 h 投料和定型；12 批则每 2 h']],
+  pts:['米淀粉糊化后黏度极高：先与一部分麦芽醪一起升温，让 α-淀粉酶把它液化，再煮沸，最后兑入主醪。','辅料比例越高，麦汁的 FAN、多酚越少，口味越淡——从一开始就要考虑与全麦芽竞品的差别。','每天批次越多，越需要精确到分钟的程序和计算机控制。'],
+  q:[['跳跃糖化为什么能得到低发酵度的麦汁？','它直接越过了 β-淀粉酶最适的 62–65 °C，只让 α-淀粉酶在 72 °C 工作，于是生成大量不可发酵的糊精。']]},
+ {id:'s3-4',no:'3.4',t:'过滤',en:'Lautering',p:'255–281',
+  goal:'把麦汁和酒糟分开，再用洗糟水把酒糟里的浸出物洗出来；速度、清亮度和收率三者都要顾到。',
+  params:[['头道麦汁','比定型麦汁高 4–6%（12% 啤酒约 16–20%）'],['温度','全程接近 78 °C，不超过约 80 °C'],['假底负荷','干法粉 140–175 kg/m²；调湿 150–210；浸渍调湿 200–280'],['假底','缝宽 0.7–0.9 mm，开孔率 8–12%，距槽底约 20 mm'],['进醪','从底部进，10 min 内完成，进口流速 ≤1 m/s'],['酒糟静置','5–30 min（150 kg/m² 时糟层约 25 cm）'],['残糖水','洗到约 2%（最多 3%）就停'],['2 h 节奏','准备和进醪 15 min + 头道麦汁 45 min + 洗糟 45 min + 排糟清理 15 min'],['压滤机','糟层约 4 cm，周期 100–110 min，每天可做 12 批；滤布寿命 2,000–3,500 批'],['酒糟','每 100 kg 麦芽得 100–130 kg 湿糟（水分 70–80%），约合每 hl 啤酒 21–22 kg']],
+  pts:['过滤槽顺序：排气（热水从下面顶满假底）→ 进醪 → 静置 → 回流浑浊麦汁 → 头道麦汁 → 洗糟（二道麦汁）→ 排糟。','静置后酒糟分三层：底层面团、主层、顶层面团（蛋白和细谷皮，透性差，要尽早打破）。','抽吸会把酒糟压实，所以按压差控制耕刀：压差升高就降刀松糟，浊度升高就抬刀。','分次小洗比连续洗收率高；连续洗更清亮、少浸提谷皮、少吸氧。','洗糟后期多酚、苦味物和硅酸溶出越来越多，所以不要过度洗糟，也不要轻易回用残糖水。','从上方抽出头道麦汁再精滤，可缩短约 20 min 而不损失收率。'],
+  faults:[['酒糟可洗出浸出物高（>0.8%）','麦芽溶解差、粉太细、洗糟太快、醪分布不均、酒糟压实、头道麦汁太稀、过滤太冷','用溶解好的麦芽，调粗粉碎，保证洗糟时间，均匀布醪，控制抽吸，头道麦汁 18–20%，全程保温约 78 °C'],['酒糟可提取浸出物高','麦芽溶解差、粉太粗、糖化太短或不合适','调细粉碎，延长或强化糖化，稠醪煮得更久']],
+  q:[['头道麦汁浓度越高，为什么收率反而越高？','头道麦汁量少了，就能留出更多洗糟水去冲洗酒糟，残留在糟里的浸出物更少。'],['能不能用 100 °C 过滤来加快速度？','不能。高温虽降低黏度，但会让 α-淀粉酶失活，洗糟中溶出的残余淀粉无法后糖化，造成“蓝醪”和淀粉浑浊。']]}
+ ]});
+
+/* ---------- 第 3 阶段 麦汁制备（下） ---------- */
+STAGES[2].steps.push(
+ {id:'s3-5',no:'3.5',t:'麦汁煮沸与加酒花',en:'Wort boiling, hop addition',p:'281–323',
+  goal:'溶解并异构化酒花苦味物，让蛋白与多酚凝固，灭菌并破坏全部酶，蒸发水分和 DMS 等不良挥发物，同时把热负荷压到最低。',
+  params:[['煮沸时间','传统 50–60 min；现代系统 40–50 min（有的 35–40 min）'],['总蒸发','现代目标约 4–6%（过去 10–15%）'],['低压煮沸','102–104 °C，最大过压约 0.5 bar'],['定型麦汁 pH','未酸化约 5.4–5.5；宜在煮沸末生物酸化到 5.1–5.2'],['可凝固氮','冷麦汁宜 20–30 mg/L（至少 14 mg/L）'],['游离 DMS','宜 40–60 µg/L 以下，冷却中点不超过 100 µg/L'],['热负荷 TBI','定型麦汁 <45（宜 30–40）；冷麦汁 <60'],['MgSO₄ 可沉淀氮','约 200 mg/L；越高泡沫越好'],['α-酸异构化所需时间','100 °C 约 90 min；130 °C 3–5 min；140 °C 2–3 min'],['能耗','常规煮沸（蒸发 12%）约 14 kWh/hl 定型麦汁；低压煮沸约 9 kWh/hl']],
+  pts:['苦味去向：煮沸中只有约 1/3 的 α-酸异构化；之后凝固物、酵母和泡沫还会带走一部分，最终按成品约 25–35% 留在啤酒里。','pH 较高时异构化更好；pH 较低时苦味更细腻、色度升得少、蛋白凝固更好（最适约 pH 5.2）。','如今不追求把可凝固蛋白全部沉淀，而是保留一部分高分子蛋白给泡沫，所以煮沸时间和强度都在下降。','DMS：前体 SMM 受热裂解成游离 DMS，随蒸汽排出；回旋静置中前体还在裂解 → 回旋前预冷到 85–90 °C 以下，或回旋后用汽提、闪蒸再除一次。','内加热器（锅内管束 + 分配伞）结构简单、易于 CIP；外加热器（每小时循环 7–8 次）控温精确、可用很低的蒸汽压。动态低压、分级香气煮沸、薄膜蒸发、真空闪蒸、汽提塔等现代系统的共同目标：低能耗、短时温和、低热负荷、保留泡沫蛋白。','锅汽冷凝器回收汽化热：每蒸发 1 hl 约得 0.8 hl 80 °C 热水；配合蓄能罐，可把下一批 72–74 °C 的麦汁预热到 93 °C 以上。','加酒花：多个品种时苦型先加，尽量异构化并赶走月桂烯等粗糙挥发物；香型最后加，甚至加在降到约 80 °C 的回旋槽里。'],
+  w:['tool:hops'],
+  faults:[['DMS 高（煮蔬菜味）','麦芽前体高、蒸发不足、回旋静置太久太热','保证蒸发效率；回旋前预冷或回旋后汽提'],['TBI 高、色深','长时间强烈煮沸、回旋久','缩短煮沸、降低强度、回旋前预冷'],['热凝固物差','煮沸不足、pH 偏高、麦汁浑','酸化到 pH 5.2，保证剧烈沸腾，提高过滤清亮度']],
+  q:[['现代煮沸更短更温和，为什么不担心 DMS？','靠结构给麦汁足够的蒸发界面（分配伞、薄膜、闪蒸、汽提）把 DMS 带走，同时避免长时间强热带来的 TBI、色度上升和泡沫蛋白过度沉淀。'],['为什么锅汽要冷凝回收，而不是直接排掉？','一方面回收大量汽化热得到热水，另一方面排出的蒸汽气味会扰民（德国受排放法规约束）；冷凝水含 DMS 等物质，不宜作酿造水，但可用于预冲洗等。']]},
+ {id:'s3-6',no:'3.6',t:'糖化间收率',en:'Brewhouse yield',p:'323–331',
+  goal:'用定型麦汁的量和浓度，算出投料中有多少变成了浸出物；这是糖化间效率的核心指标，也是税务核查的依据。',
+  params:[['公式','收率 = 浸出物(kg/hl) × 0.96 × 热定型麦汁(hl) ÷ 投料(dt)'],['0.96','热麦汁（约 100 °C）冷到 20 °C 的体积收缩系数'],['收率因子','浸出物 × 比重 × 0.96，已并入 Plato 表（例如 12.0% 对应 12.06）'],['正常范围','74–79%；最多比细粉、风干基的实验室收率低约 1%'],['比重计','20 °C 校准，读最上方仍清楚的刻度；不在 20 °C 时查修正值']],
+  pts:['实验室收率与糖化间收率之差是评价设备和操作的标尺；现代糖化间这个差很小。','影响因素：麦芽（溶解度；投料按风干基记，水分越高收率越低）、设备、糖化法（稠醪煮得越久浸出越多）、过滤（分次洗糟、出流均匀）、操作纪律。','回收的浑浊麦汁回到下一批时，计算下一批收率要扣掉其体积的 75%，避免重复计算。'],
+  w:['tool:yield'],
+  q:[['为什么要乘 0.96？','定型麦汁在接近 100 °C 下量取，比重计却在 20 °C 读数；冷却时体积收缩约 4%（这 4% 里还包括酒花糟和凝固物），不乘就会高估浸出物。']]},
+ {id:'s3-7',no:'3.7',t:'回旋沉淀与热凝固物',en:'Whirlpool, hot break',p:'336–346',
+  goal:'去除 30–80 µm 的热凝固物（粗凝固物）。它妨碍澄清、包裹酵母、增加损失，还带入麦芽脂肪酸。',
+  params:[['热凝固物','定型后 6,000–8,000 mg/L，去除后应 ≤100 mg/L'],['回旋槽','平底，向出口有 1% 坡度；直径与液高常取 3 : 1（1 : 1 到 5 : 1）'],['进口','流速 ≤3.5 m/s，大流量、低剪切，切向进入（底部一个防吸氧，下 1/3 一个产生旋转）'],['静置','20–30 min；加 Denk 环可缩短 30–60%，但不少于 20 min'],['Imhoff 锥测试','适合回旋的麦汁 5–6 min 沉降完，上层清亮'],['分离机','损失 <0.3%，但碟片驱动 0.65–0.8 kW/m³、投资高'],['整酒花','每 kg 酒花约带走 4.9 L 麦汁（喷淋加压榨可降到 2.0 L）']],
+  pts:['“茶杯效应”：旋转停下后，底部边界层因摩擦减速，压力与离心力失衡，形成指向中心的二次流，把颗粒推到中央堆成锥。','底部的环形涡会干扰沉降，Denk 环（离底一定高度的同心格栅）可以切断它。','为降低热负荷和后生成的 DMS，现代工艺尽量缩短回旋静置，并在回旋前预冷到 85 °C 以下。','浑浊麦汁（约 75% 麦汁 + 25% 凝固物）在下一批洗糟开始时加回，几乎可全部回收。'],
+  faults:[['凝固物锥不紧、带进冷麦汁','过滤浑、管道剪切大、进液太快、二次流强、出液太快、液高与直径比例不当','逐项检查进液条件；出液末期放慢速度']],
+  q:[['回旋槽底部为什么不宜做中心凝固物杯？','凹坑破坏底部边界层、削弱回旋效应，也不能防止锥体露出液面后坍塌。']]},
+ {id:'s3-8',no:'3.8',t:'冷却、充氧与冷凝固物',en:'Cooling, aeration, cold break',p:'347–357',
+  goal:'快速把麦汁冷到接种温度，按需去除冷凝固物，并给酵母供足氧。',
+  params:[['冷却','板式换热器，从 95–98 °C 冷到 5–8 °C'],['一段冷却','1–2 °C 冰水被加热到 80–88 °C；两段冷却先用工艺水预冷，再用冰水'],['板片压差','通常约 2 bar，最多 4 bar'],['冷凝固物','约 0.5 µm，60 °C 以下开始析出；冷到 5 °C 仍有约 14% 溶解'],['残留冷凝固物','120–160 mg/L（干物质）较理想'],['充氧目标','8–10 mg O₂/L；理论上每 hl 只需约 3 L 空气，实际要多得多'],['氧的溶解系数','0 °C 47.4，10 °C 36.8，20 °C 30.0 mL/(kg·bar)']],
+  pts:['冷麦汁充氧是整个啤酒生产中唯一有意加氧的时刻：几小时内被酵母用于合成不饱和脂肪酸和甾醇，并不伤麦汁。热麦汁充氧则会大量氧化，使麦汁变深变苦。','空气必须先经无菌过滤；充氧方式有烧结烛管、文丘里管、双组分喷嘴、静态混合器、离心混合器。','冷凝固物是蛋白-多酚复合物，不宜完全去除，否则口味发空；方法有珍珠岩过滤（约 90%）、浮选（4–8 h，去除 60–65%，已少新建）、冷麦汁分离机（50% 以上）。','如果热凝固物去得干净、酵母活力强，如今多数厂不再单独去除冷凝固物。'],
+  q:[['为什么说要“给酵母供氧，而不是给麦汁供氧”？','氧对麦汁本身只有坏处（氧化）；它唯一的价值是让酵母在起酵的几小时里合成细胞膜成分。理想情况是氧直接到达酵母、很快被用完。']]}
+);
+
+/* ---------- 第 4 阶段 发酵与成熟（上） ---------- */
+STAGES.push({id:'st4',n:4,name:'发酵与成熟',en:'Fermentation and maturation',pages:'367–452',
+ sum:'酵母把可发酵糖变成酒精和 CO₂，同时生成并再去除一批副产物。判断成熟的指标是双乙酰；最后在 −1 至 −2 °C 冷贮至少一周，为过滤和胶体稳定做准备。',
+ inp:'接种麦汁 + 酵母',out:'成熟啤酒：−1 °C，双乙酰 ≤0.10 mg/L，溶氧约 0',
+ chips:['接种 20–30×10⁶/mL','双乙酰 ≤0.10 mg/L','17–20 d'],
+ steps:[
+ {id:'s4-1',no:'4.1',t:'酵母代谢',en:'Yeast metabolism',p:'367–375',
+  goal:'理解酵母为什么这样做：它要的是能量和建造细胞的材料，酒精和 CO₂ 是它要排掉的废物。',
+  params:[['总反应','C₆H₁₂O₆ → 2 C₂H₅OH + 2 CO₂（ΔG 约 −230 kJ/mol）'],['质量比','180 g 葡萄糖 → 92 g 乙醇 + 88 g CO₂'],['能量去向','只有 2 ATP（约 61 kJ）被酵母利用，约 169 kJ 成为热 → 全麦啤酒约 4,500–4,700 kJ/hl'],['糖的利用顺序','葡萄糖、果糖 → 蔗糖、麦芽糖 → 麦芽三糖（下面酵母要到后发酵才利用）'],['发酵与呼吸','约 98% 的糖被发酵，约 2% 被呼吸'],['FAN 标尺','200–230 mg/L（12% 麦汁）；脯氨酸几乎不能利用'],['锌','0.10–0.15 mg/L；低于约 0.12 mg/L 易出现发酵问题'],['硝酸盐','20 mg/L 就对酵母有害（被还原成亚硝酸盐）']],
+  pts:['糖酵解用 10 步把葡萄糖变成 2 个丙酮酸；无氧时丙酮酸脱羧成乙醛，再由乙醇脱氢酶（需要锌）还原成乙醇。','巴斯德效应：有氧时发酵受抑；Crabtree 效应：糖浓度超过约 0.1 g/L 时，即使有氧，呼吸也被抑制——所以麦汁里的酵母总在发酵。','氨基酸经脱氨、脱羧、还原变成高级醇（Ehrlich 途径）；脱氨留下的有机酸进入啤酒。','起酵前酵母先动用糖原（最初 10–12 h 大幅下降），之后再积累到干物质的约 30%；冷藏能保住糖原，也就保住了下一代的起酵能力。','酵母蛋白酶 A 会分解大麦来的泡沫蛋白 LTP1，冷除菌灌装的啤酒尤其受影响。'],
+  q:[['为什么发酵放出的热远大于酵母“用到”的能量？','每 mol 葡萄糖释放约 230 kJ，只有 2 个 ATP（约 61 kJ）被酵母捕获，其余约 169 kJ 以热的形式放出，必须由冷却系统带走。'],['为什么加糖或大量辅料的麦汁更容易出发酵问题？','它们不带来氨基酸、磷酸盐和锌，而酵母建造新细胞离不开这些物质。']]},
+ {id:'s4-2',no:'4.2',t:'副产物与成熟',en:'By-products, maturation',p:'375–386',
+  goal:'区分会被去除的“嫩啤酒味”和去不掉的“成熟香气”，用工艺把两者都控制在目标范围。',
+  params:[['嫩啤酒味','双乙酰、醛、硫化物：成熟中可被生化去除'],['成熟香气','高级醇、酯：常规工艺去不掉，只能在发酵中控制生成量'],['双乙酰','风味阈值约 0.10–0.15 mg/L；成品总双乙酰（含前体）≤0.10 mg/L'],['乙醛','嫩啤酒 20–40 mg/L → 成品 <8–10 mg/L'],['高级醇','淡色全麦啤酒 60–90 mg/L；>100 mg/L 损害风味'],['酯','下面发酵 ≤60 mg/L，上面发酵 ≤80 mg/L；重要的约 6 种，如乙酸乙酯、乙酸异戊酯'],['pH','接种麦汁 5.3–5.6（生物酸化 5.0–5.3）→ 啤酒 4.3–4.6，目标 4.2–4.4'],['CO₂','活泼的啤酒 0.45–0.50%；发酵产生的 CO₂ 只有约 15% 留在酒里'],['色度','发酵头几天约变浅 3 EBC']],
+  pts:['双乙酰分三步：酵母排出无味的乙酰羟基酸（前体）→ 前体在细胞外经氧化脱羧变成双乙酰（低 pH、升温、进氧都会加快；这一步限制了成熟速度）→ 只有酵母能把双乙酰还原成乙偶姻和丁二醇。酵母的还原能力约为生成速度的 10 倍，并随温度大幅提高。','每次吸氧（比如转罐）都会让残留前体更多地转成双乙酰，又得等酵母再还原一次。','加快成熟：发酵到接近最终发酵度、低 pH、接种后杜绝进氧、较高的成熟温度（下面发酵啤酒最高约 18 °C）、让足量活跃酵母保持悬浮、加起泡酒。','高级醇约 80% 在主发酵中生成：温度高、搅动、氨基酸不足、麦汁浓度超过 13%、接种温度高于 8 °C 都会增加；提高接种量、冷接种冷发酵、尽早施压则减少。','酯：麦汁越浓越多；温度高、搅动多会增加；施压会减少；罐越高（静压和 CO₂ 越高）越少。','自溶的信号是 pH 升高：酵母味、苦味变宽、泡沫和稳定性下降、双乙酰去除变差、更容易感染。'],
+  q:[['为什么用双乙酰判断成熟，而不是看酯？','双乙酰的去除与其他嫩啤酒味大致同步，而且能测；它低于阈值时，醛和硫化物通常也已消失。酯属于成熟香气，本来就不会被去掉。'],['转罐时吸了一点氧，为什么双乙酰会“回升”？','氧加快了残留前体向双乙酰的转化，新生成的双乙酰需要酵母再花时间还原。']]},
+ {id:'s4-3',no:'4.3',t:'纯种酵母扩培',en:'Pure yeast propagation',p:'386–395',
+  goal:'在无菌条件下，用最短的时间提供代谢正确、活力高的接种酵母。',
+  params:[['分离','Lindner 滴培养挑选单细胞，8–10 °C 培养；斜面 0–5 °C 可保存 6–9 个月'],['实验室放大','每步约 1 : 10（10 mL → 100 mL → 1 L），再到 Carlsberg 瓶（8–10 L、20–25 L）'],['扩培终点','约 1–1.4 亿个/mL（受氨基酸等营养限制）'],['接种麦汁要求','碘正常；溶氧 ≥8–10 mg/L；FAN 200–230 mg/L；锌 ≥0.15 mg/L；pH 5.0–5.2；黏度 ≤1.7 mPa·s（10%）'],['接种酵母要求','死细胞 ≤3%，无杂酵母和杂菌，浓稠泥状'],['放大倍数','待接种麦汁 : 旺盛发酵的种液 不超过 3 : 1 到 4 : 1'],['同化法','同化器保持对数期（约 1 亿个/mL、表观浸出物 6–7%），抽走 80–85% 去接种，留 15–20% 再补麦汁']],
+  pts:['扩培用定型麦汁（酒花苦味物能抑制杂菌），100 °C 灭菌至少 30 min 后冷到 14–16 °C。','酵母在 20–25 °C 繁殖得快，但扩培中要逐步把它带到酒厂的发酵温度，避免冷冲击。','补料（Drauflassen）让酵母始终处在对数期：起酵快、pH 降得快、双乙酰去除更快、口味更干净。','单罐法每一代都重新接种纯培养，排除了退化；第一天每 15 min 充气 1 min，第二天每 5 min 充气 1 min。','小厂可用开放式扩培（两级敞口容器或奶桶法），但无法保证无菌。'],
+  q:[['扩培时为什么不能靠“拼命充氧”无限加快？','麦汁中的糖会抑制呼吸（Crabtree 效应）；而且增殖到约 1 亿个/mL 时，氨基酸等营养就不够了。']]}
+ ]});
+
+/* ---------- 第 4 阶段 发酵与成熟（下） ---------- */
+STAGES[3].steps.push(
+ {id:'s4-4',no:'4.4',t:'常规发酵与贮酒',en:'Conventional fermentation, lagering',p:'395–416',
+  goal:'在开放发酵池完成主发酵，再在密闭贮酒罐里加压后发酵，让啤酒饱和 CO₂ 并澄清。',
+  params:[['接种量','20–30×10⁶ 个/mL ≈ 每 hl 0.6–1 L 浓酵母泥（泥约 3×10⁹ 个/mL）'],['接种温度','5–7 °C'],['最高温度','冷发酵 8–9 °C；暖发酵 10–15 °C'],['降温','每天不超过 1 K；转罐时约 4–5 °C'],['主发酵','6–8 天；发酵热约 587 kJ/kg 浸出物'],['转罐时浸出物','全麦啤酒约 3.4–4%（表观发酵度约 66–69%），最后 24 h 只降 0.2–0.3%'],['转罐与极限之差','约 10 个百分点（约留 1% 浸出物给后发酵）'],['发酵度极限','淡色全麦和比尔森约 80–84%'],['真实发酵度','≈ 0.81 × 表观发酵度（Balling）'],['收获酵母','每 hl 接种麦汁 2.0–2.5 L 浓酵母'],['贮酒','−2 至 −1 °C 至少 7 天；灌装时 CO₂ 要 >0.50%，0.32% 已显平淡'],['发酵间','室温 5.5–6 °C；CO₂ 浓度 4% 就可能致命']],
+  pts:['发酵外观依次是：变白 → 低泡 → 高泡 → 泡沫塌落 → 松散的褐色盖层（转罐前撇除，以免沉下去弄脏酵母）。','表观发酵度用比重计直接测，被酒精“骗”了一部分，但与真实值成比例，所以实践中通用。','浑浊转罐（带较多酵母）适合低发酵度酵母、贮酒时间短、窖冷、罐大；清亮转罐则相反。','调配可以用混合十字或混合方程计算；两种液体其实很难真正混匀。','按亨利定律，CO₂ 溶解量与罐内绝对压力成正比、温度越低越多；用调压阀设定压力（过去用水柱、汞柱）。后发酵放出的 CO₂ 还能“气洗”带走部分挥发性嫩啤酒味。','冷凝固物颗粒很小，贮酒越冷析出越多；灭菌木片增加表面积，可以加快澄清。'],
+  w:['tool:pitch','tool:atten','tool:blend','tool:co2'],
+  q:[['转罐时为什么故意留约 1% 的可发酵浸出物？','这些糖在密闭加压的贮酒罐里后发酵，产生的 CO₂ 让啤酒饱和，同时把部分挥发性嫩啤酒味气洗出去。'],['表观发酵度 80% 时，真实发酵度大约多少？','约 0.81 × 80% ≈ 65%。']]},
+ {id:'s4-5',no:'4.5',t:'锥形罐发酵与成熟',en:'Cylindroconical vessels',p:'416–443',
+  goal:'在一个或两个大型密闭锥形罐里完成发酵、成熟和冷贮；用仪表和冷却程序代替过去的“看”和“闻”。',
+  params:[['液高','发酵罐最大约 20 m；直径与总液高约 1 : 2'],['锥角','60–90°，常用 60–75°；60° 时锥高 ≈ 0.866 × 直径'],['顶空','发酵罐 ≥18–25%；小麦啤酒约 40%（只装一半）；贮酒罐 5–25%（视是否仍在还原双乙酰、是否加起泡酒）'],['罐容量','一般只接收半天的糖化间产量'],['内表面','Ra <0.8 µm；锥底抛光到约 0.25 µm'],['冷却需求','共约 8,600–9,000 kJ/hl：发酵热 4,300–4,600 + 冷到 −1 °C 约 4,200'],['冷却面（每 100 hl）','直接蒸发冷却的发酵罐约 1.6–3.4 m²（视蒸发温度）'],['麦汁 FAN','理想 ≥230 mg/L；全麦芽不低于 200，用辅料至少 150'],['周期','发酵、成熟加冷贮一般 17–20 天']],
+  pts:['从下灌、从下排；罐顶有超压阀、真空阀和 CIP 喷头，要纳入 CIP 并防冻；管路切换用带泄漏指示的双座阀。','真空比超压更危险：热罐被冷水喷淋时，气体收缩、蒸汽冷凝（体积缩到约 1/1786），大罐会瞬间被吸瘪。','冷贮时约 +2.5 °C 的啤酒密度最大、沉在锥部；啤酒约 −2 °C 开始结冰 → 锥部必须单独冷却，否则那里的酵母偏暖、自溶。','酵母尽早分次排出：成熟后期酵母排出蛋白酶 A 损害泡沫，锥部的 CO₂ 分压和缺乏营养让老细胞自溶。','一罐法省清洗、少 CO₂ 损失、不转罐也就不吸氧；两罐法必须在发酵罐里完成双乙酰还原，贮酒罐只做冷贮、澄清和口味圆润。','可以减少或不给最后一批麦汁充氧，以保持发酵活性，并促进酵母生成 SO₂（有利于风味稳定）。'],
+  w:['chart:ferm','tool:ccv','tool:cool'],
+  q:[['锥形罐为什么必须有锥部冷却？','冷贮时最重的 +2.5 °C 啤酒沉在锥部，没有锥部冷却那里就一直偏暖，沉在锥底的酵母会耗尽储备并自溶。'],['一罐法的主要缺点是什么？','为发酵泡沫预留的顶空在冷贮阶段闲置，罐容利用率较低。']]},
+ {id:'s4-6',no:'4.6',t:'酵母回收、罐底啤酒与 CO₂',en:'Yeast cropping, recovery, CO₂',p:'443–452',
+  goal:'在酵母状态最好时收获、处理、贮存和回用；把罐底里的啤酒和发酵产生的 CO₂ 回收回来。',
+  params:[['回用前充氧','先排胞内 CO₂，充氧 2–3 h 后接种；不马上用就不要充氧'],['贮存温度','短期 ≤8 °C（接种温度）；过周末 3–5 °C；停酿期 0–1 °C'],['死细胞','尽量 ≤3%，任何情况下 ≤5%（美蓝染色）'],['回用代数','下面酵母一般不超过 5–6 代；上面酵母常 5–15 代'],['罐底','约为啤酒量的 1.5–2%；可回收约总产量的 1%'],['罐底啤酒处理','每 hl 加 50 g 活性炭 + 50 g 硅胶，硅藻土过滤并瞬时杀菌后，最多 5% 兑入刚开始发酵的麦汁'],['CO₂ 平衡','常规主发酵约产 4 kg/hl；酒厂自用约 1.8–2.0 kg/hl；锥形罐实际可回收约 2.0 kg/hl'],['CO₂ 纯度','应达 99.998%（99.97% 已不够）']],
+  pts:['收酵母时要让酵母沿锥壁缓慢下滑、保持水平界面；排得太快会形成漏斗，把啤酒一起吸走。','10 m 液柱下酵母胞内约有 1 bar 过压，突然泄压会大量起泡 → 泵入带背压的容器，吹无菌空气排出 CO₂ 后再泄压。','酵母状态差的信号：初口感有硫味或酵母味、泡沫差、苦味宽而持久、啤酒 pH 升 0.1–0.2、发酵拖延、双乙酰高、死细胞增多、絮凝变差、过滤困难。','过去洗酵母、过筛、水下保存的做法因污染风险和营养流失已被淘汰，改为保存在发酵后的啤酒残液中。','CO₂ 回收流程：泡沫分离 → 气柜缓冲 → 洗涤 → 两级压缩到 18–22 bar → 冷却 → 交替干燥 → 活性炭 → 液化 → 储罐。'],
+  q:[['收获的酵母如果不立刻接种，为什么不应充氧？','充氧会让它开始呼吸和合成，但没有麦汁提供新能源，只能消耗自己的糖原储备；下一代起酵变慢，死细胞增多。']]},
+ {id:'s4-7',no:'4.7',t:'放酒前的啤酒',en:'Beer quality on drawing off',p:'447',
+  goal:'成熟啤酒离开贮酒罐去过滤之前，应当已经在胶体上稳定，并满足下面这组数字。',
+  params:[['温度','0 至 −1 °C（在 −1 至 −2 °C 冷贮一周之后）'],['CO₂','不补充碳酸化也至少 0.50%'],['pH','4.2–4.4，最高 4.6'],['酵母浓度','1–2×10⁶ 个/mL，最多 5×10⁶ 个/mL'],['双乙酰','≤0.10 mg/L'],['溶解氧','0 mg/L']],
+  q:[['为什么过滤前的溶氧应当是 0？','酵母在发酵中已经把氧用尽；此后任何进氧都无法再被去除，只会加速老化和浑浊。']]}
+);
+
+/* ---------- 第 5 阶段 过滤与稳定化（上） ---------- */
+STAGES.push({id:'st5',n:5,name:'过滤与稳定化',en:'Filtration and stabilisation',pages:'453–531',
+ sum:'除去酵母和浑浊颗粒，让啤酒在保质期内保持生物、胶体和风味三方面的稳定；从贮酒罐到灌装机，全程不许进氧。',
+ inp:'成熟啤酒（酵母最多约 10⁶ 个/mL）',out:'清酒：清酒罐 0–1 °C，途中增氧 ≤0.01–0.02 mg/L',
+ chips:['硅藻土 80–120 g/hl','瞬时杀菌 68–72 °C','PVPP ≤50 g/hl'],
+ steps:[
+ {id:'s5-1',no:'5.1',t:'硅藻土过滤',en:'Kieselguhr filtration',p:'453–473',
+  goal:'用预涂层和连续添加的硅藻土截留酵母和浑浊颗粒，同时绝不让氧进入啤酒。',
+  params:[['预涂','第一层粗土约 700–800 g/m²（约占 70%），第二层较细的土；合计 800–1,200 g/m²，厚 1.5–3 mm，约 10–15 min'],['连续添加','60–120 g/hl（约 1/3 中等土 + 2/3 细土）；整个过程 80–120 g/hl，最多约 200'],['压差上升','平均约 0.1–0.3 bar/h（罐式最多 0.5 bar/h）'],['终止压力','板式预涂机 2–5 bar；烛式 6–8 bar'],['烛式滤机','楔形丝缝 50–80 µm，烛芯最长约 2 m，最多约 700 根，无运动部件'],['灭菌','出口 >85 °C（最好 90–95 °C）后至少保持 30 min'],['助滤剂','硅藻土用于啤酒（湿密度 <300 g/L 较好）；珍珠岩只用于麦汁'],['比过滤能力（hl/(m²·h)）','烛式预涂 4.8–6；板式预涂 3.8–4；纸板 1.5–1.8；除菌过滤 0.8–1.0']],
+  pts:['支撑网孔（70–100 µm）远大于硅藻（2–4 µm），所以必须先预涂出一层互相支撑的“桥”。压力或流量一冲，桥就断，啤酒立刻跑浑 → 滤前滤后设缓冲罐，恒流运行。','添加太少：酵母不能嵌进土层，形成阻挡层，压力陡升；添加太多：曲线平缓，但过早占满滤渣空间；酵母冲击会造成堵塞。','1 L 空气（0.5 bar 表压）约含 450 mg 氧，混进 450 hl 啤酒就会让它升高约 0.01 mg/L——所以管道要用脱氧水排空气，用纯 CO₂ 背压，不回收富氧的前后段。','前后段（水与啤酒的混合段）含氧、易污染，至少要经过瞬时杀菌（约 28–30 PU）；为了能兑回去，酿造时浸出物要提高 0.2–0.3%。','硅藻土粉尘（尤其煅烧后含方石英）可致矽肺：散装入仓、无尘拆袋、戴 P2 面罩、定期体检。'],
+  q:[['硅藻土过滤为什么必须“恒流、无冲击”？','滤饼是靠颗粒互相搭桥形成的，压力或流量突变会撕裂滤层，浑浊颗粒直接穿过去。']]},
+ {id:'s5-2',no:'5.2',t:'精滤、错流与无硅藻土过滤',en:'Sheet, membrane, cross-flow',p:'473–487',
+  goal:'在硅藻土之后进一步澄清或除菌，或者用膜和可再生助滤剂彻底取代硅藻土。',
+  params:[['冷除菌串联','精滤约 5 µm → 抛光约 1 µm → 除菌约 0.45–0.5 µm'],['纸板和模块','纤维素 + 硅藻土；分粗滤、澄清、精滤、除菌（EK）等级；越精通量越小'],['错流膜','中空纤维或陶瓷，孔 0.4–0.8 µm（啤酒常用 0.45–0.65 µm）'],['典型膜系统','每 2 h 或 4–5 h 反冲一次；损失 0.2–0.4%；膜寿命约 4,000 h'],['连续式错流','浓缩液干物质上限约 17–18%'],['可再生助滤剂','例如聚苯乙烯 + PVPP 的颗粒：预涂约 2 kg/m²，连续 50–300 g/hl，兼有稳定作用'],['预澄清分离机','可减少硅藻土 20–50%，滤机周期约翻倍']],
+  pts:['取代硅藻土的动力主要是废土处置费和健康风险，而不是土本身的价格。','膜过滤的难点：孔径均匀、长期耐压、断丝时能立即隔离、清洗能恢复全部孔（碱加过氧化氢比单用碱效果好）。','纸板机效果好，但只能在厂内反洗，占地大、人工多，不耐高固含量和高菌数。'],
+  q:[['错流过滤和死端过滤的根本区别是什么？','死端过滤让全部液体穿过滤层，颗粒越积越厚；错流过滤让液体沿膜面流过，只有一部分清液透过，截留物被流动冲刷并回流浓缩。']]},
+ {id:'s5-3',no:'5.3',t:'生物稳定化',en:'Microbiological stabilisation',p:'487–493',
+  goal:'保证保质期内不被微生物破坏：要么杀死，要么除去所有可能的腐败菌。',
+  params:[['PU 定义','60 °C 保持 1 min = 1 PU；PU = 时间(min) × 1.393^(T−60)'],['所需 PU','啤酒一般 14–15 PU，污染重时 22–27 PU；罐装啤酒 18–20 PU（最多约 30）'],['瞬时杀菌','68–72 °C 保持约 50 s，全程约 2 min；热回收可达 96%；需最高约 12 bar 的泵压防止 CO₂ 析出'],['隧道杀菌','约 1 h；能耗 14–24 MJ/hl；瓶内顶隙 ≥4%（0.5 L 瓶约 20 mL）'],['罐装杀菌温度','不超过约 62 °C（罐只耐 6 bar）'],['常见腐败菌','野生酵母（如 S. diastaticus）；Pectinatus、Megasphaera、短乳杆菌、有害片球菌等']],
+  pts:['温度稍升，所需时间就指数下降：以 15 PU 为例，64 °C 约 4 min，68 °C 约 1 min，72 °C 只要约 17 s——控温必须极准。','PU 衡量的是杀菌效果，不是风味损伤；风味受损更取决于保持时间和啤酒含氧量。','约一半的污染来自过滤后、灌装时的二次污染，所以瞬时杀菌对洗瓶和灌装卫生要求很高。','冷除菌灌装避免了热损伤，是趋势；但整条线都要按无菌设计，而且常见泡沫稳定性变差（蛋白酶 A 仍在）。','隧道杀菌的冷点在瓶底中央上方约 1.5 cm，温度要在那里测；停机时要有 PU 保护，防止过度杀菌。'],
+  w:['tool:pu'],
+  q:[['隧道杀菌的瓶子为什么必须留足顶隙？','液体几乎不可压缩，受热膨胀只能压缩顶部的气体；顶隙太小，内压会升到几个 bar，把瓶子撑破。'],['为什么说瞬时杀菌只保证了“啤酒本身”的生物纯净？','它在灌装之前进行，之后的洗瓶、灌装、压盖环节仍可能带入微生物。']]}
+ ]});
+
+/* ---------- 第 5 阶段 过滤与稳定化（下） ---------- */
+STAGES[4].steps.push(
+ {id:'s5-4',no:'5.4',t:'胶体稳定化',en:'Colloidal stabilisation',p:'493–504',
+  goal:'推迟冷浑浊和永久浑浊的出现：减少蛋白降解物和多酚中的一方，并排除加速它们结合的因素。',
+  params:[['冷浑浊','冷却时出现、回温到 20 °C 又溶解；随时间转为不再溶解的永久浑浊'],['加速因素','温度（影响最大）、氧化（可让浑浊提前约 5 倍）、重金属离子、晃动、光'],['硅胶','50–150 g/hl；吸附形成浑浊的多肽，对泡沫蛋白影响小；颗粒平均 8–20 µm 最有效'],['PVPP','选择性吸附多酚；德国最多 50 g/hl；可用约 85 °C 的 1% NaOH 再生重复使用'],['硅溶胶','约 30–60 mL/hl，冷贮前加入，与蛋白交联成凝胶后沉降、被完全去除（符合纯酒令）'],['工艺底线','定型麦汁可凝固氮 ≤2 mg/100 mL；过滤前 −2 至 0 °C 冷贮 ≥7 天']],
+  pts:['冷浑浊是高分子蛋白降解物与高度缩合的多酚（主要是花色苷原）靠氢键松散结合而成，夹带少量碳水化合物和重金属。颗粒在布朗运动中不断碰撞、越聚越大，最后肉眼可见。','工艺措施贯穿全程：低蛋白细皮大麦、良好溶解、充分焙焦、残碱 <5 °dH、不做长蛋白休止、完全糖化、不过度洗糟、强力煮沸和充分凝固、酸化到 pH 5.1–5.2、冷而旺盛的发酵、足够的冷贮、全程排氧、不接触裸露的非不锈钢金属。','这些措施只能推迟、不能阻止浑浊，所以保质期长的啤酒还要用稳定剂：硅胶去蛋白、PVPP 去多酚，两者可以联用。'],
+  q:[['为什么巴氏杀菌反而会加速胶体浑浊？','温度升高加快了蛋白与多酚的聚合；杀菌解决了生物稳定，却牺牲了一部分胶体稳定。']]},
+ {id:'s5-5',no:'5.5',t:'风味稳定与防氧',en:'Flavour stability, oxygen',p:'504–509',
+  goal:'延缓老化味：从制麦起就控制老化物质的前体，从贮酒罐到瓶子杜绝进氧，并保护成品不受光和热的伤害。',
+  params:[['老化羰基','2-甲基丁醛、3-甲基丁醛、苯乙醛等 Strecker 醛，以及脂肪降解产生的醛；阈值极低，在瓶中不断增加'],['进氧预算','贮酒罐出口 0.00–0.01 mg/L；到灌装机入口最多再增加 0.01–0.02 mg/L'],['瓶或罐中总氧','<0.10–0.15 mg/L'],['CO₂ 纯度','≥99.998%'],['日光臭','350–500 nm 的光使异 α-酸侧链裂解成硫醇；棕瓶防护最好，绿瓶不足'],['麦芽这一端','TBA <14、库尔巴哈 <41%、凋萎温度低（30–40 °C）'],['糖化这一端','投料 60–62 °C、醪 pH 约 5.2、低氧投料、回旋热保持 <30 min']],
+  pts:['两大前体库：不饱和脂肪酸（脂氧合酶酶解与自氧化）和美拉德产物（焙焦与煮沸中形成）。其中很大一部分在麦芽里就已定型，之后无法降低。','老化气味会依次出现：黑醋栗味（严重进氧后几天）、纸板味（脂肪降解）、面包和甜麦芽味（Strecker 醛）、雪莉酒味。','氧是头号敌人，但不是唯一原因：很多转化不需要氧，高温贮存和持续晃动同样加速老化。','抗坏血酸等还原剂（非纯酒令国家可用）反而会增加羰基生成，不能无限延长保质期；酵母自产的 SO₂ 有一定保护作用。','充 CO₂：只有 CO₂ 不足时才做；CO₂ 要极细地分散并有足够的溶解管段，喷气元件必须易于清洗（不要用烧结棒），因为其后已没有过滤。'],
+  q:[['为什么灌装日期比保质期更能说明啤酒好不好喝？','经过稳定化的啤酒几乎能一直保持清亮，但风味从灌装那天起就在老化；灌装日期直接告诉你它已经放了多久。'],['容器预压时为什么用的水也必须先脱氧？','先充水再用 CO₂ 顶出，水中的溶解氧会进入 CO₂ 气相，随后又溶入啤酒。']]},
+ {id:'s5-6',no:'5.6',t:'特殊工艺',en:'Special methods',p:'509–523',
+  goal:'高浓酿造提升产能，冰啤改变口感，脱醇或限制发酵来生产无醇和低醇啤酒。',
+  params:[['高浓','定型麦汁常用 13.5–14.5%；上限约 14.5–15%，再高副产物在成品里可察觉'],['节能例','300 hl 11% 改成 15% 只需 220 hl，少加热煮沸 26.7%'],['高浓发酵供氧','约每 1% 原麦汁 1 mg O₂/L'],['过滤后加水','成分与酿造水一致、冷到 −1 °C、除菌、完全脱氧、充到啤酒的 CO₂ 含量，并全程按比例加入'],['冰啤','冷到约 −4 °C 形成冰晶，再结晶长大后分离，用碳酸水调酒度'],['反渗透脱醇','约 40 bar，啤酒 ≤15 °C；透过液含酒精 1.5–1.8%'],['透析脱醇','啤酒只从 1 °C 升到约 6 °C；某些酯最多损失 65%'],['真空蒸馏','绝压 0.04–0.2 bar，蒸发温度 30–55 °C'],['无醇啤酒','酒精 <0.5% vol；常先脱到约 0.3%，再兑起泡酒或成熟啤酒恢复香气'],['中断发酵法','原麦汁 9–11%，发酵到 0.5% 酒精（表观发酵度约 10%）后停止，0–1 °C 成熟至少 10 天']],
+  pts:['高浓的好处主要是稀释水不必加热和煮沸；代价是发酵更慢、酯和高级醇更多，泡沫随稀释变差，回旋沉淀也可能变差。','冰啤中部分多酚和多肽随冰析出，口感更顺更圆，泡沫与稳定性通常改善；“冰”指的是工艺，不是饮用温度。','所有脱醇方法都会同时带走一部分酯和高级醇，所以要回兑。','限制发酵的难点是麦汁味：从 7–8% 的麦汁出发、配 8–15% 浅色焦香麦芽、煮沸不要太短、选合适的酵母。冷接触法在 −2 °C 让酵母还原麦汁味的羰基而几乎不产酒精；固定化酵母可在约 1 °C 连续、可控地生产。'],
+  w:['tool:hg'],
+  q:[['高浓酿造在过滤后加水，为什么是最复杂的一环？','这些水直接进入成品：成分、温度、无菌、脱氧、CO₂ 含量都必须与啤酒一致，而且要在整个放酒过程中按比例加入，事后无法纠正。']]}
+);
+
+/* ---------- 第 6 阶段 灌装与收尾 ---------- */
+STAGES.push({id:'st6',n:6,name:'灌装与收尾',en:'Filling, losses, cleaning',pages:'532–731',
+ sum:'把清酒装进瓶、罐、桶，保住 CO₂、不进氧、不污染；再用损耗、麦芽单耗和清洗体系把整条线闭环管起来。',
+ inp:'清酒（0–1 °C）',out:'瓶装、罐装、桶装成品；总氧 ≤0.10–0.15 mg/L',
+ chips:['洗瓶 80–85 °C','灌装吸氧 ≈0.02 mg/L','损耗 8–10%'],
+ steps:[
+ {id:'s6-1',no:'6.1',t:'洗瓶',en:'Bottle washing',p:'532–557',
+  goal:'让回收瓶干净、无菌、无残留地回到灌装机，同时控制用水、用热和化学品。',
+  params:[['碱液','1.5–2.0% NaOH（1.6% 最佳）加添加剂；第二碱槽 65–70 °C、0.6–0.8%'],['温度','80–85 °C；升温一次跳跃 ≤30 K、降温 ≤20 K，防止爆瓶'],['碱浸时间','平均 6–7 min（80 °C 下 6–8 min，必要时更长）'],['流程','倒残液 → 预浸（约 40 °C）→ 预碱（约 60 °C）→ 主碱（80 °C）→ 碱喷 → 中间喷 → 温水喷 → 冷水喷 → 新鲜水喷'],['带出量','10–20 mL/瓶（优化到 12–15，好的机器 <8）；最后残水 ≤0.5 mL/瓶'],['用水','200–250 mL/瓶（约 0.3–0.7 hl/hl）；180–200 mL 算好'],['耗热','30–40 kJ/瓶（目标 <35，最优约 25）'],['表面活性剂','残留 ≥100 mg/L 就会损泡']],
+  pts:['回收瓶灌装的完整链条：分拣外来瓶和外来箱 → 检查回收瓶 → 洗瓶 → 空瓶检验 → 灌装压盖 → 液位检验 →（需要时）隧道杀菌 → 贴标 → 装箱码垛。','清洗效果来自四个要素相乘：化学（NaOH 与添加剂）、温度、时间和喷冲的机械作用。','空气中的 CO₂ 会把 NaOH 变成碳酸盐、降低清洗力 → 按电导持续“补碱”。碱液中的标签纸浆、颜料和胶会形成泥，可用沉降、离心或膜过滤去除；膜过滤能让碱液几乎无限期使用。','5–7 次循环后瓶身涂层被洗掉，擦伤环（scuffing）越来越明显；棕色瓶对 350–500 nm 的光防护最好。'],
+  q:[['洗瓶机升温为什么要分几级？','玻璃怕温度骤变，一次跳 30 K 以上会产生热应力而爆瓶；预浸和预碱段既预热瓶子，又预先溶解污垢。']]},
+ {id:'s6-2',no:'6.2',t:'灌装与压盖',en:'Bottle filling, closing',p:'564–599',
+  goal:'用等压原理把啤酒灌进瓶里，尽量排尽瓶中空气并立即封口，再逐瓶检验。',
+  params:[['原理','等压（背压）灌装：瓶内气压与贮液缸相等时才开液阀；灌装压力要高于 CO₂ 饱和压力'],['灌装温度','冷灌 5–10 °C（最常见）；温灌 18–25 °C；热灌不用于啤酒'],['预抽真空','两次抽到约 90%（约 100 mbar），中间充 CO₂ → 瓶内空气降到原来的约 1%'],['灌装吸氧','现代灌装机约 0.02 mg/L'],['高压喷射（HDE）','最高约 40 bar 的极细 80 °C 热水射入瓶口，使瓶颈起泡、把空气顶出'],['顶隙氧','0.33 L 瓶 ≤0.06 mg；0.5 L 瓶 ≤0.08 mg'],['灌装后总氧','≤0.10–0.15 mg/L'],['灌装机','旋转式，最多约 200 个阀；单次灌装 5–6 s；可超过 10 万瓶/h'],['皇冠盖','26 mm 规格、21 个齿；带除氧剂的垫片可结合 2–4 mg O₂']],
+  pts:['定量方式：液位（回气管或探头，最常用）、容积（电磁流量计）、质量（多用于桶）。','罐和 PET 瓶是薄壁容器，不能抽真空（会瘪），只能 CO₂ 冲洗预压或用长管灌装。','HDE 的水量要恰当：太多反而带进氧，泡太多又损失啤酒；研究表明使用 HDE 时生成的 Strecker 醛更少。','灌后检验：液位（γ 射线、X 射线、高频或红外），同时剔除缺盖、歪盖；电磁脉冲让盖子中心振动，可以判断瓶颈是否充满细泡、盖是否密封。'],
+  q:[['啤酒灌装为什么一定要等压？','啤酒是 CO₂ 过饱和溶液，常压下灌会立刻大量起泡，既灌不满又跑 CO₂；先让瓶内建立与缸内相同的 CO₂ 压力，啤酒才能平稳流入。']]},
+ {id:'s6-3',no:'6.3',t:'罐、PET 瓶与桶',en:'Cans, PET, kegs',p:'612–677',
+  goal:'按容器特点调整灌装：罐和 PET 怕压怕真空，PET 还透气；桶要全自动清洗灭菌，并靠内压证明自己密封。',
+  params:[['罐','耐内压 ≥6 bar；罐壁约 0.09 mm（钢）/0.11 mm（铝）；铝罐 330 mL 约 12 g'],['罐装','CO₂ 冲洗预压，液膜沿罐壁灌入；总氧可达约 0.02 mg/L（耗 CO₂ 0.6–0.8 kg/hl）；盖下充 CO₂ 后两道卷封'],['PET','0.5 L 瓶 <30 g；透氧、失 CO₂，需要阻隔涂层、多层结构或除氧剂；啤酒用 PET 只做一次性瓶'],['桶（Keg）','不锈钢 1.4301/1.4306，常用 30 L 和 50 L；矛管直达桶底；始终带压'],['桶装吸氧','≤0.1 mg/L；灌装慢起步、快主灌、慢收尾'],['桶线能力','直线式约 300 桶/h；旋转式最多约 1,000 桶/h']],
+  pts:['罐的刚性来自内压，空罐一捏就扁；非碳酸饮料要滴一点液氮来建立内压。充氮胶囊（widget）在开罐时释放氮气，形成细腻但不太稳定的泡沫。','PET 会吸附香气成分、使用后出现应力开裂而无法洗净，所以不适合做回收瓶。','桶线：翻转（阀朝下）→ 去帽 → 压力检查（失压说明泄漏、阀坏或被动过）→ 排残 → 外洗 → 水、碱、酸、热水脉冲冲洗 → 蒸汽灭菌并检漏 → CO₂ 吹出蒸汽并预压 → 灌装 → 称重或 γ 射线查液位 → 翻正 → 戴帽。'],
+  q:[['回收的空桶为什么先要测内压？','桶离开市场时仍然带压，外界的东西进不去；压力消失说明桶漏、阀坏或被人动过，必须先查明原因。']]},
+ {id:'s6-4',no:'6.4',t:'损耗、麦芽单耗与产能',en:'Losses, malt usage, capacity',p:'333–334、709–715',
+  goal:'用三套相互独立的数字检查整个工厂：糖化间收率管粉碎到定型，啤酒损耗管定型到可售啤酒，麦芽单耗管全过程。',
+  params:[['啤酒损耗','平均 8–10%（占定型麦汁）'],['损耗构成','冷缩约 4%（体积收缩）、开放冷却蒸发 2.5–3.0%、发酵间 1.3–1.7%、贮酒 0.6–0.8%、过滤 0.8–1.0%、灌装 0.2–0.8%'],['麦芽单耗','6% 啤酒约 9 kg/hl，11% 约 17 kg/hl，16% 约 26 kg/hl'],['滴漏','每秒一滴（0.05 mL），一年约 15.8 hl'],['过滤损失','板框约 0.4–0.8%，烛式约 0.3%；现代灌装车间 0.2–0.4%'],['产能经验','每天 8 批、每周 5 天时，每 1 t 投料能力约对应每年 10 万 hl 啤酒']],
+  pts:['可售啤酒产量 = 本期销量 + 期末库存 − 期初库存；库存要按各工段的经验损耗折算成“可售啤酒”再相加。','麦芽单耗最难被操作参数“修饰”，最能客观反映全厂水平；但收率和损耗的百分数不能相加。','常见损失点：容器壁、长管道、漏点，酒花糟和凝固物带走的麦汁，溢出的泡沫，撇泡沫盖（每 100 hl 损失 10–20 L），沉降不紧的酵母；回用酵母尽量“干”加入下一批。'],
+  w:['tool:loss','tool:cap'],
+  q:[['为什么说麦芽单耗“不能被操纵”？','它直接用投进去的麦芽除以卖出去的啤酒，中间任何收率或损耗的算法调整都绕不过去。']]},
+ {id:'s6-5',no:'6.5',t:'清洗与消毒（CIP）',en:'Cleaning and disinfection',p:'716–731',
+  goal:'让所有接触产品的表面保持清洁无菌；材料、药剂、程序和管道设计必须互相匹配。',
+  params:[['典型 CIP 程序','回收水预冲 3–5 min → 1–2% NaOH 70 °C 循环 30–50 min → 中间冲洗 → 1–2% 硝酸 10–15 min → 冲洗 → 消毒 15–20 min → 新鲜水终冲；合计 1–2 h'],['锥形罐酸性一步法','预冲约 10 min → 酸约 60 min → 冲洗 5 min → 消毒 15 min → 新鲜水 10 min；可在 CO₂ 气氛下进行'],['糖化容器','2–3% NaOH 加氧化性添加剂，再做短时酸洗'],['过氧乙酸','0.01–0.1%，分解后无残留'],['喷淋','以低压喷淋为主（≤6 bar，20–75 m³/h）；高压喷射最高约 60 bar'],['回流泵','能力比送液泵高约 25%'],['材料','CrNi 钢（1.4301/1.4306）不耐含氯药剂；含氯场合用 CrNiMo 钢（如 1.4404、1.4571）']],
+  pts:['分区设 CIP 站：糖化间与麦汁管路、未滤啤酒管道、未滤啤酒罐、滤后啤酒与灌装，防止污染跨区传播。','热碱遇 CO₂ 生成碳酸盐而失效；锥形罐要先排 CO₂，而且清洗温度通常 ≤35 °C（冷液喷淋热罐会造成真空内爆）。酸性一步法同时避开了这两个问题。','啤酒石是微生物的藏身处，用稀硝酸去除；季铵盐难冲净，长期使用会培养出耐药的腐败菌；次氯酸盐绝不能与酸混用。','管道设计缺陷（死角、没排气的高点、下垂积液段、变径、三通阀）会让 CIP 失效。','配制化学品永远“先水后酸碱”，并戴护目镜。'],
+  q:[['锥形罐为什么很少用 80 °C 以上的热碱清洗？','罐里残留的 CO₂ 会把 NaOH 变成碳酸盐，清洗力下降；而且热罐被冷液喷淋时气体收缩、蒸汽冷凝，会产生真空，大罐可能被吸瘪。']]},
+ {id:'s6-6',no:'6.6',t:'安全',en:'Safety at work',p:'187–188、359–360、523–526',
+  goal:'记住酒厂里几类会致命的风险：CO₂、粉尘爆炸、运动机械、受限空间与压力容器、化学品、硅藻土粉尘。',
+  params:[['CO₂','德国车间限值 0.5% vol（短时 1.0%）；>2% 呼吸加快、出现视觉障碍；8–10% 失去意识直至死亡'],['进罐前','抽吸或冲洗到 ≤0.5%（短时 1.0%）；书面许可、指定监护人、安全联络岗；用气体检测仪'],['粉尘','粒径 <100 µm、浓度约 20–2,000 g/m³ 时可爆；混合物约 400 °C 以上被点燃，薄层粉尘在 200 °C 以下的热表面上就能着火'],['锥形罐人孔','上下各至少 450 mm；从上方进入须系安全带和绳，禁用绳梯和移动梯'],['压力容器','液面上方可能出现 >0.1 bar 过压的容器都属压力容器']],
+  pts:['典型事故模式：一个人留下“我自己弄完”，CO₂ 让人逐渐无力、跪倒，在罐底更高的浓度中窒息；周一早上开工前 CO₂ 浓度最高。','进入带搅拌器、耕糟机或翻麦机的设备前，拔下保险或控制钥匙随身带着，防止被人误启动。','离心分离机必须按标记位置装配；不平衡的转鼓一旦解体，破坏半径很大。'],
+  q:[['为什么“放下点燃的蜡烛”不能用来判断发酵罐能否进入？','蜡烛要到 CO₂ 约 8–10% 才熄灭，而这个浓度已经足以让人失去意识。']]}
+ ]});
+
+/* ---------- 糖化与发酵程序（示意，据书中文字描述绘制） ---------- */
+const MASH=[
+ {k:'inf62',t:'高温投料浸出法',d:'溶解很好的麦芽：62 °C 投料，按淀粉酶最适温度逐级升温，各保持约 20–30 min，全程约 1.5 h。蛋白分解少、泡沫物质多，脂氧合酶也在高温下失活；前提是麦芽溶解非常好且均匀。',
+  main:[[0,62],[30,62],[40,72],[65,72],[71,78],[76,78]],dec:[],ev:[{x:0,y:62,t:'投料',d:'62 °C 投料',a:'start',dx:-2},{x:52,y:72,t:'碘检',d:'72 °C 糖化休止中做碘检'},{x:76,y:78,t:'过滤',d:'78 °C 终止糖化，转入过滤槽',a:'start',dx:6}]},
+ {k:'inf50',t:'50 °C 投料浸出法',d:'溶解正常的麦芽：50 °C 投料让 β-葡聚糖继续分解，再到 63 °C 生成麦芽糖、72 °C 糖化，全程约 2 h。易自动化，比煮出法省能量。',
+  main:[[0,50],[20,50],[33,63],[73,63],[82,72],[102,72],[108,78],[113,78]],dec:[],ev:[{x:0,y:50,t:'投料',d:'50 °C 投料',a:'start',dx:-2},{x:92,y:72,t:'碘检',d:'碘正常后才升温'},{x:113,y:78,t:'过滤',d:'78 °C 终止糖化',a:'start',dx:6}]},
+ {k:'dec1',t:'一次煮出法',d:'35 °C 投料，缓慢升到 50 °C 休止，再把全醪升到 64 °C 长时间生成麦芽糖；然后取出一部分稠醪煮沸 15–30 min，泵回使全醪升到约 75 °C 糖化。按公式，这部分煮出醪约占总醪 40%。',
+  main:[[0,35],[15,35],[30,50],[50,50],[64,64],[138,64],[148,75],[168,75],[171,78],[176,78]],dec:[[[94,64],[118,100],[138,100],[148,75]]],ev:[{x:0,y:35,t:'投料',d:'35 °C 投料',a:'start',dx:-2},{x:94,y:64,t:'取醪',d:'取出约 40% 稠醪（11 ÷ (90 − 64)）',a:'end',dx:-6},{x:148,y:75,t:'回混',d:'煮沸醪泵回未煮醪，全醪升到约 75 °C',a:'start',dx:8},{x:176,y:78,t:'过滤',d:'终止糖化后过滤',a:'start',dx:6}]},
+ {k:'dec2',t:'两次煮出法',d:'经典做法：50 °C 投料；第一次取稠醪煮沸 15–20 min，泵回使全醪到 64 °C 生成麦芽糖；第二次取醪煮沸（时间略短），泵回到约 75 °C 糖化，全程 3–3.5 h。主醪在 50 °C 停留很久，蛋白和 β-葡聚糖分解强，酒体和泡沫容易受损。',
+  main:[[0,50],[73,50],[83,64],[139,64],[149,75],[179,75],[182,78],[187,78]],dec:[[[15,50],[20,50],[53,100],[73,100],[83,64]],[[100,64],[124,100],[139,100],[149,75]]],ev:[{x:15,y:50,t:'①取',d:'第一次取出约 35% 稠醪（14 ÷ (90 − 50)）',a:'end',dx:-4},{x:83,y:64,t:'①回',d:'回混，全醪到 64 °C',a:'end',dx:-6},{x:100,y:64,t:'②取',d:'第二次取出约 42% 稠醪',a:'start',dx:6},{x:149,y:75,t:'②回',d:'回混，全醪到约 75 °C',a:'start',dx:8},{x:187,y:78,t:'过滤',d:'终止糖化',a:'end',dx:0}]},
+ {k:'jump',t:'跳跃糖化（热水浸出）',d:'约 35 °C 做稠醪，再注入沸水直接升到约 72 °C，跳过 β-淀粉酶的最适温度；只由 α-淀粉酶糖化，生成大量糊精，发酵度极限约 40%，适合营养啤酒和低醇啤酒。只能用溶解好的麦芽。',
+  main:[[0,35],[20,35],[24,72],[74,72],[80,78],[85,78]],dec:[],ev:[{x:24,y:72,t:'加沸水',d:'注入沸水，醪温跳到约 72 °C',a:'start',dx:6},{x:85,y:78,t:'过滤',d:'终止糖化',a:'start',dx:6}]}
+];
+const FERM=[
+ {k:'cc',t:'冷发酵–冷成熟',d:'约 21 天。6–7 °C 接种，约 2 天升到 8–9 °C 并保持约 2 天，再缓慢降到 3–4 °C 转罐（与发酵度极限还差 0.8–1.3%）；继续缓慢降温，让酵母把双乙酰降到 0.1 mg/L 以下，最后 −1 °C 冷贮至少一周。',
+  pts:[[0,6.5],[2,8.5],[4,8.5],[8.5,4],[14,-1],[21,-1]],bands:[[0,8.5,'主发酵'],[8.5,14,'后发酵与成熟'],[14,21,'冷贮']],ev:[{x:8.5,y:4,t:'转罐',d:'转罐：仍留少量可发酵浸出物'}]},
+ {k:'cca',t:'冷发酵–锥形罐加速成熟',d:'约 20 天。6–7 °C 接种、升到 8–9 °C 后不再降温，同温转入锥形罐并加约 10% 起泡酒；活跃酵母把双乙酰降到阈值以下后，才冷到 −1 °C 保持一周。达到最终发酵度后每 2–4 天排一次酵母。',
+  pts:[[0,6.5],[2,8.5],[11,8.5],[13,-1],[20,-1]],bands:[[0,7,'主发酵'],[7,11,'成熟'],[13,20,'冷贮']],ev:[{x:7,y:8.5,t:'+10% 起泡酒',d:'同温转罐并加起泡酒'},{x:11,y:8.5,t:'降温',d:'双乙酰 <0.1 mg/L 后降温',a:'start',dx:4}]},
+ {k:'wc',t:'暖发酵（无压）–冷成熟',d:'17–20 天。8 °C 接种，让温度升到 12–14 °C：双乙酰生成得更多，但去除也更快、更彻底；双乙酰去除后再冷到 −1 °C 冷贮一周。常规发酵间也能做。',
+  pts:[[0,8],[2,13],[8,13],[10,-1],[18,-1]],bands:[[0,5,'主发酵'],[5,8,'成熟'],[10,18,'冷贮']],ev:[{x:8,y:13,t:'降温',d:'双乙酰去除后降温',a:'start',dx:4}]},
+ {k:'pf',t:'加压发酵',d:'17–20 天。温度比常规暖发酵更高（书中举例可到 20 °C 以上），靠背压抑制酯和高级醇；约 50% 发酵度时把压力升到计算的背压并保持到成熟结束，再降到与贮酒温度相应的背压；第 9–10 天冷却，−1 °C 冷贮约一周。需要核准压力的容器。图中最高温度为示意。',
+  pts:[[0,8],[2,15],[9,15],[10,-1],[18,-1]],bands:[[0,5,'主发酵'],[5,9,'带压成熟'],[10,18,'冷贮']],ev:[{x:3,y:15,t:'升压',d:'约 50% 发酵度时升到设定背压'},{x:9,y:15,t:'降温',d:'成熟结束后降压、冷却',a:'start',dx:4}]},
+ {k:'cw',t:'冷发酵–暖成熟',d:'约 20 天。8–9 °C 发酵到约 50% 发酵度后关掉冷却，让温度自行升到 12–13 °C 完成成熟；双乙酰达标后转罐冷贮一周，或在同一罐里冷到 −1 °C（一罐法）。1 bar 过压下不补充 CO₂ 就能得到 5.4–5.6 g/L。',
+  pts:[[0,8.5],[3.5,8.5],[5.5,12.5],[10,12.5],[12,-1],[19,-1]],bands:[[0,3.5,'主发酵'],[3.5,10,'自升温成熟'],[12,19,'冷贮']],ev:[{x:3.5,y:8.5,t:'关冷却',d:'约 50% 发酵度时停止冷却',a:'end',dx:-4},{x:10,y:12.5,t:'降温',d:'双乙酰达标后冷到 −1 °C',a:'start',dx:4}]},
+ {k:'920',t:'冷主发酵 + 程序化成熟（9/20）',d:'约 20 天，成本较高。8–10 °C 主发酵到几乎完全发酵，最好先用离心机除去主发酵酵母（用 CO₂ 隔氧），加 10% 起泡酒后用板换加热到 20 °C 保持 1.5–2 天并监控双乙酰，再冷到 −1 °C 冷贮一周。成熟只需 2–3 天，成熟加冷贮共 10–12 天。',
+  pts:[[0,8],[2,9.5],[7.5,9.5],[8,20],[10,20],[11,-1],[20,-1]],bands:[[0,7.5,'主发酵'],[8,10,'20 °C 成熟'],[11,20,'冷贮']],ev:[{x:8,y:20,t:'加热',d:'加起泡酒，板换加热到 20 °C',a:'end',dx:-4},{x:10,y:20,t:'降温',d:'保持 1.5–2 天后冷到 −1 °C',a:'start',dx:4}]}
+];
+function ptsTable(rows){return `<div class="tbl"><table><tr><th>系列</th><th>时间</th><th>温度 °C</th></tr>${rows.join('')}</table></div>`}
+function progFig(fig,kind){
+  const P=kind==='mash'?MASH:FERM,cin=fig.querySelector('.cin'),d=fig.querySelector('.prog-d'),tv=fig.querySelector('.tview .tbl'),lg=fig.querySelector('.lg-dec');
+  const bs=[...fig.querySelectorAll('.seg button')];
+  function draw(i){
+    const p=P[i];bs.forEach((b,j)=>b.setAttribute('aria-pressed',String(j===i)));
+    if(kind==='mash'){
+      lineChart(cin,{h:320,mr:66,x0:0,x1:190,y0:30,y1:105,step:1,xt:[0,30,60,90,120,150,180],yt:[40,50,60,70,80,90,100],xTitle:'时间（分钟）',ybands:RESTS,
+        series:[{name:'主醪',cls:'main',segs:[p.main],dot:true},{name:'煮出醪',cls:'dec',segs:p.dec}],events:p.ev,xLabel:x=>`第 ${x} 分钟`,aria:`${p.t}温度曲线（示意）`});
+      if(lg)lg.hidden=!p.dec.length;
+      const rows=p.main.map(q=>`<tr><td>主醪</td><td class="num">${q[0]} min</td><td class="num">${q[1]}</td></tr>`);
+      p.dec.forEach((sg,n)=>sg.forEach(q=>rows.push(`<tr><td>煮出醪${p.dec.length>1?'（第 '+(n+1)+' 次）':''}</td><td class="num">${q[0]} min</td><td class="num">${q[1]}</td></tr>`)));
+      tv.innerHTML=ptsTable(rows);
+    }else{
+      lineChart(cin,{h:300,x0:0,x1:21,y0:-2,y1:24,step:.5,xt:[0,3,6,9,12,15,18,21],yt:[0,5,10,15,20],xTitle:'时间（天）',bands:p.bands,
+        series:[{name:'啤酒温度',cls:'main',segs:[p.pts],dot:true}],events:p.ev,xLabel:x=>`第 ${fmt(x,1)} 天`,aria:`${p.t}温度程序（示意）`});
+      tv.innerHTML=ptsTable(p.pts.map(q=>`<tr><td>啤酒温度</td><td class="num">第 ${q[0]} 天</td><td class="num">${q[1]}</td></tr>`));
+    }
+    d.textContent=p.d;
+  }
+  bs.forEach((b,j)=>b.addEventListener('click',()=>draw(j)));draw(0);
+}
+const FIGS={
+ enz:{t:'主要酶的最适温度窗口',cap:'条形为最适温度范围，圆点为书中给出的单一温度，× 为明显失活的温度；灰色竖带是四段常用休止温度。依据 Kunze p.214–225 的文字整理。',build:f=>{enzChart(f.querySelector('.cin'));f.querySelector('.tview .tbl').innerHTML=enzTable()}},
+ mash:{t:'糖化程序温度曲线（示意）',legend:'<span><i class="lk main"></i>主醪</span><span class="lg-dec"><i class="lk dec"></i>煮出醪</span>',seg:MASH,cap:'横轴统一为 0–190 min，方便比较各方法的时长。曲线依据书中对各方法的文字描述绘制，升温速率按约 1 °C/min（煮出醪约 1.5 °C/min）假设；煮沸醪回混时按约 90 °C 的有效温度计。',build:f=>progFig(f,'mash')},
+ ferm:{t:'下面发酵的温度程序（示意）',seg:FERM,cap:'依据 Kunze p.439–443 对六种工艺的文字描述绘制；三角标记为关键操作，双乙酰与压力曲线未画出。',build:f=>progFig(f,'ferm')},
+ malt:{t:'淡色麦芽制麦中的物料质量变化',cap:'以 100 kg 清选大麦为起点（Kunze p.174）。质量先因吸水上升，焙焦后因失水和干物质损失降到约 78 kg，贮存中回潮到约 80 kg。',build:f=>{maltChart(f.querySelector('.cin'));f.querySelector('.tview').remove()}}
+};
+function buildFig(el,key){
+  const F=FIGS[key];el.className='chart';el.id='c-'+key;el.dataset.name=F.t;
+  el.innerHTML=`<div class="c-top"><div class="c-title">${esc(F.t)}</div>${F.legend?`<div class="legend">${F.legend}</div>`:''}</div>${F.seg?`<div class="seg" role="group" aria-label="选择工艺">${F.seg.map(p=>`<button type="button" aria-pressed="false">${esc(p.t)}</button>`).join('')}</div>`:''}<div class="cwrap"><div class="cin"></div></div>${F.seg?'<p class="prog-d"></p>':''}<figcaption>${esc(F.cap)}</figcaption><details class="tview"><summary>表格视图</summary><div class="tbl"></div></details>`;
+  F.build(el);
+}
+
+/* ---------- 图标 ---------- */
+const ICON={
+ 1:'<path d="M24 45V8"/><ellipse cx="19" cy="15" rx="3" ry="5.5" transform="rotate(-28 19 15)"/><ellipse cx="29" cy="15" rx="3" ry="5.5" transform="rotate(28 29 15)"/><ellipse cx="19" cy="24" rx="3" ry="5.5" transform="rotate(-28 19 24)"/><ellipse cx="29" cy="24" rx="3" ry="5.5" transform="rotate(28 29 24)"/><ellipse cx="19" cy="33" rx="3" ry="5.5" transform="rotate(-28 19 33)"/><ellipse cx="29" cy="33" rx="3" ry="5.5" transform="rotate(28 29 33)"/><path d="M21 9l-4-6M27 9l4-6M24 8V2"/>',
+ 2:'<path d="M11 7h26v19L24 40 11 26z"/><path d="M14 15c2-2 4 2 6 0s4 2 6 0 4 2 6 0 2 1 3 0"/><path d="M24 40v5"/><circle cx="20" cy="22" r="1.2"/><circle cx="27" cy="24" r="1.2"/><circle cx="23" cy="29" r="1.2"/>',
+ 3:'<path d="M9 40V27a15 11 0 0 1 30 0v13z"/><path d="M24 16V4M21 4h6"/><path d="M12 45v-5M36 45v-5"/><path d="M17 33h14"/>',
+ 4:'<path d="M15 4h18v28l-9 12-9-12z"/><path d="M15 12h18"/><circle cx="21" cy="21" r="1.5"/><circle cx="27" cy="25" r="1.5"/><circle cx="23" cy="29" r="1.5"/>',
+ 5:'<rect x="10" y="6" width="28" height="28" rx="3"/><path d="M16 11v18M21 11v18M26 11v18M31 11v18"/><path d="M10 34l14 9 14-9"/><path d="M4 18h6M38 26h6"/>',
+ 6:'<path d="M14 45V25c0-4 4-6 4-10V5h5v10c0 4 4 6 4 10v20z"/><path d="M18 9h5"/><rect x="31" y="21" width="12" height="24" rx="2"/><path d="M31 25h12M31 41h12"/>'
+};
+const icon=n=>`<svg class="fs-ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[n]}</svg>`;
+
+/* ---------- 渲染 ---------- */
+const nn=n=>String(n).padStart(2,'0');
+function stepHTML(s){
+  const b=[];
+  b.push(`<div class="sp-h"><span class="sp-no">${s.no}</span><h3>${esc(s.t)}</h3><span class="sp-en">${esc(s.en)}</span><span class="sp-pg">p.${esc(s.p)}</span></div>`);
+  b.push(`<p class="goal"><b>目的</b>${esc(s.goal)}</p>`);
+  if(s.params)b.push(`<div class="blk"><h4>关键参数</h4><dl class="params">${s.params.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl></div>`);
+  if(s.table)b.push(`<div class="blk tbl"><table><tr>${s.table.head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${s.table.rows.map(r=>`<tr>${r.map((c,i)=>`<td${i===1?' class="num"':''}>${esc(c)}</td>`).join('')}</tr>`).join('')}</table></div>`);
+  if(s.pts)b.push(`<div class="blk"><h4>机理与要点</h4><ul class="pts">${s.pts.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>`);
+  (s.w||[]).forEach(w=>b.push(`<div class="wg" data-w="${w}"></div>`));
+  if(s.faults)b.push(`<div class="blk"><h4>常见问题</h4><div class="tbl"><table><tr><th>现象</th><th>常见原因</th><th>对策</th></tr>${s.faults.map(f=>`<tr><td>${esc(f[0])}</td><td>${esc(f[1])}</td><td>${esc(f[2])}</td></tr>`).join('')}</table></div></div>`);
+  if(s.q)b.push(`<div class="blk"><h4>自测</h4><div class="qs">${s.q.map(([q,a])=>`<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div></div>`);
+  return `<article class="step" id="${s.id}">${b.join('')}</article>`;
+}
+function render(){
+  $('#flow').innerHTML=STAGES.map(st=>`<li class="fs"><a href="#${st.id}"><div class="fs-top">${icon(st.n)}<div><div class="fs-no">${nn(st.n)}</div><div class="fs-nm">${esc(st.name)}</div></div></div><div class="fs-pg">p.${st.pages}</div><div class="fs-io">入 <b>${esc(st.inp)}</b><br>出 <b>${esc(st.out)}</b></div><div class="chips">${st.chips.map(c=>`<span class="chip">${esc(c)}</span>`).join('')}</div></a></li>`).join('');
+  $('#main').innerHTML=STAGES.map(st=>`<section class="stage" id="${st.id}" aria-labelledby="${st.id}-h"><div class="st-h"><span class="st-no">阶段 ${nn(st.n)} · ${esc(st.en)} · p.${st.pages}</span><h2 id="${st.id}-h">${esc(st.name)}</h2><p class="st-sum">${esc(st.sum)}</p><p class="st-io">输入 <b>${esc(st.inp)}</b> → 输出 <b>${esc(st.out)}</b></p></div>${st.steps.map(stepHTML).join('')}</section>`).join('')+'<p class="empty" id="empty" hidden>没有找到匹配的工序，换个关键词试试。</p>';
+  document.querySelectorAll('.wg').forEach(el=>{const [k,v]=el.dataset.w.split(':');if(k==='tool')buildTool(el,v);else{const f=document.createElement('figure');el.replaceWith(f);buildFig(f,v)}});
+  $('#idx').innerHTML=STAGES.map(st=>`<li class="ist"><a href="#${st.id}"><span>${nn(st.n)}</span>${esc(st.name)}</a><ol>${st.steps.map(s=>`<li><a href="#${s.id}" data-s="${s.id}">${s.no} ${esc(s.t)}</a></li>`).join('')}</ol></li>`).join('');
+  const tools=[...document.querySelectorAll('.tool,figure.chart')];
+  $('#idx-tools').innerHTML='<h2>图与计算工具</h2>'+tools.map(t=>`<a href="#${t.id}">${t.classList.contains('tool')?'计算':'图'} · ${esc(t.dataset.name)}</a>`).join('');
+  const nSteps=STAGES.reduce((a,s)=>a+s.steps.length,0),nQ=STAGES.reduce((a,s)=>a+s.steps.reduce((b,x)=>b+(x.q?x.q.length:0),0),0);
+  $('#stats').innerHTML=`<span><b>${STAGES.length}</b> 个阶段</span><span><b>${nSteps}</b> 个工序</span><span><b>${document.querySelectorAll('.tool').length}</b> 个计算工具</span><span><b>${document.querySelectorAll('figure.chart').length}</b> 张图</span><span><b>${nQ}</b> 道自测</span>`;
+  $('#src').innerHTML=`<p>来源：Wolfgang Kunze，《Technology Brewing and Malting》第 3 版国际版，Susan Pratt 译，VLB Berlin，2004（ISBN 3-921690-49-8）。页码均为原书印刷页码。</p><p>这是一份学习笔记：内容为中文自述整理，没有复制原书的段落、插图或表格；工艺曲线依据书中文字描述绘制，时间与升温速率是示意假设。计算工具按书中给出的方法实现；书中 p.245 的煮出醪示例存在排印错误，本页按公式计算。</p><p>书中数据反映约 2004 年的德国与欧洲实践及法规（如纯酒令、饮用水法规）；出现的商业设备与工艺名称只作为方法示例。</p><p>姊妹页：<a href="https://claude.ai/artifact/3KpeDWEpxwJbjuLpghvZHf" target="_blank" rel="noopener">啤酒酿造七层问答</a>（问答、酿造流程、风格配方与费曼复习）。</p>`;
+  const steps=[...document.querySelectorAll('.step')];steps.forEach(s=>s._t=s.textContent.toLowerCase());
+  const q=$('#q'),cnt=$('#count');
+  function filter(){
+    const v=q.value.trim().toLowerCase();let k=0;
+    steps.forEach(s=>{const ok=!v||s._t.includes(v);s.hidden=!ok;if(ok)k++});
+    document.querySelectorAll('section.stage').forEach(sec=>{sec.hidden=!!v&&!sec.querySelector('.step:not([hidden])')});
+    $('#empty').hidden=k>0;cnt.textContent=v?`显示 ${k} / ${steps.length} 个工序`:'';
+  }
+  q.addEventListener('input',filter);
+  const links=new Map([...document.querySelectorAll('#idx a[data-s]')].map(a=>[a.dataset.s,a]));
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.remove('on'));const a=links.get(e.target.id);if(a)a.classList.add('on')}})},{rootMargin:'-12% 0px -75% 0px'});
+    steps.forEach(s=>io.observe(s));
+  }
+  document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const t=document.getElementById(a.getAttribute('href').slice(1));if(!t)return;if(t.hidden&&q.value){q.value='';filter()}e.preventDefault();t.scrollIntoView({block:'start',behavior:smooth()});history.replaceState(null,'','#'+t.id);t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash')});
+  if(location.hash){const t=document.getElementById(location.hash.slice(1));if(t)setTimeout(()=>t.scrollIntoView({block:'start'}),0)}
+}
+render();
+
+</script>
